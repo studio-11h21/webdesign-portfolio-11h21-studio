@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Studio Name — Minimal Web Design, CMS & SEO for Indie Brands</title>
+  <meta name="description" content="I build clean, minimal websites for independent brands and creative businesses. CMS setup, Shopify, Squarespace, WordPress, SEO strategy, DTP and social content — working worldwide." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://yourdomain.com/" />
+
+  <meta name="geo.region" content="NL-ZH" />
+  <meta name="geo.placename" content="The Hague, Netherlands" />
+  <meta name="geo.position" content="52.0705;4.3007" />
+  <meta name="ICBM" content="52.0705, 4.3007" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourdomain.com/" />
+  <meta property="og:title" content="Your Studio Name — Minimal Web Design for Indie Brands" />
+  <meta property="og:description" content="Clean, considered web design for independent brands. CMS, Shopify, SEO strategy, DTP and social content. Working worldwide." />
+  <meta property="og:image" content="https://yourdomain.com/assets/og-image.jpg" />
+  <meta property="og:locale" content="en_GB" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Your Studio Name — Minimal Web Design for Indie Brands" />
+  <meta name="twitter:description" content="Clean, considered web design for independent brands. Working worldwide." />
+  <meta name="twitter:image" content="https://yourdomain.com/assets/og-image.jpg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://yourdomain.com/#webpage",
+        "url": "https://yourdomain.com/",
+        "name": "Your Studio Name — Minimal Web Design, CMS & SEO for Indie Brands",
+        "description": "Clean, minimal websites for independent brands and creative businesses.",
+        "inLanguage": "en",
+        "isPartOf": { "@id": "https://yourdomain.com/#website" }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://yourdomain.com/#website",
+        "url": "https://yourdomain.com/",
+        "name": "Your Studio Name",
+        "publisher": { "@id": "https://yourdomain.com/#organization" }
+      },
+      {
+        "@type": ["Organization","ProfessionalService"],
+        "@id": "https://yourdomain.com/#organization",
+        "name": "Your Studio Name",
+        "url": "https://yourdomain.com/",
+        "description": "Minimal web design studio for independent and creative brands. CMS build, Shopify, SEO/GEO strategy, DTP and social content. Working worldwide.",
+        "foundingDate": "2024",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "The Hague",
+          "addressRegion": "Zuid-Holland",
+          "addressCountry": "NL"
+        },
+        "areaServed": { "@type": "AdministrativeArea", "name": "Worldwide" },
+        "knowsAbout": ["Web Design","CMS Development","Shopify","Squarespace","WordPress","Readymag","SEO Strategy","GEO Strategy","DTP Design","Social Media Content"],
+        "sameAs": ["https://www.11h21.com"],
+        "parentOrganization": { "@type": "Organization", "name": "11h21", "url": "https://www.11h21.com" }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:      #ffffff;
+      --off-white:  #f6f5f1;
+      --grey-light: #e8e8e6;
+      --grey-mid:   #9a9a96;
+      --grey-dark:  #3a3a38;
+      --black:      #111110;
+      --font-head:  'Archivo', sans-serif;
+      --font-mono:  'IBM Plex Mono', monospace;
+      --nav-h:      52px;
+      --gutter:     clamp(24px, 4vw, 56px);
+      --col-gap:    clamp(16px, 2vw, 32px);
+      --head-size:  clamp(22px, 3.4vw, 49px);
+      --head-lh:    1.1;
+    }
+
+    html { font-size: 13px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-mono); font-weight: 300; color: var(--black); background: var(--white); cursor: none; }
+    img, video { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Cursor ── */
+    #cursor-ring {
+      position: fixed; width: 36px; height: 36px;
+      border: 1.5px solid #ffffff; border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: difference;
+      transition: width 0.25s ease, height 0.25s ease;
+      will-change: left, top;
+    }
+    #cursor-dot {
+      position: fixed; width: 6px; height: 6px;
+      background: #ffffff; border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: difference; will-change: left, top;
+    }
+    body.cursor-hover #cursor-ring { width: 56px; height: 56px; }
+    body.cursor-click #cursor-ring { width: 22px; height: 22px; }
+    @media (hover: none) { #cursor-ring, #cursor-dot { display: none; } }
+
+    /* ── Navigation ── */
+    nav#mainNav {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 var(--gutter);
+      z-index: 200; background: transparent;
+      /* Dark matt sits behind nav content via pseudo-element */
+    }
+
+    /* Semi-transparent black matt behind the nav bar —
+       always present over the hero video, expands when dropdown is open */
+    nav#mainNav::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(0, 0, 0, 0.50);
+      transition: height 0.25s ease, background 0.3s ease;
+      z-index: -1;
+      pointer-events: none;
+    }
+    nav#mainNav.dropdown-open::before {
+      height: calc(var(--nav-h) + 180px);
+    }
+    nav#mainNav.past-hero::before { background: rgba(0, 0, 0, 0.72); }
+    nav#mainNav.past-hero.dropdown-open::before { height: calc(var(--nav-h) + 180px); background: rgba(0, 0, 0, 0.85); }
+    .nav-logo {
+      font-family: var(--font-mono); font-weight: 500;
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: #ffffff; mix-blend-mode: difference;
+    }
+
+    /* Inline nav links (Home, Services dropdown, Contact) */
+    .nav-links {
+      display: flex; align-items: center; gap: 32px; list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-mono); font-weight: 400;
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #ffffff; mix-blend-mode: difference;
+      transition: opacity 0.2s ease;
+    }
+    .nav-links a:hover { opacity: 0.6; }
+
+    /* Dropdown — split label/chevron */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-toggle-wrap {
+      display: flex; align-items: center; gap: 4px;
+    }
+    .nav-dropdown-label {
+      font-family: var(--font-mono); font-weight: 400;
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #ffffff; mix-blend-mode: difference;
+      transition: opacity 0.2s ease;
+    }
+    .nav-dropdown-label:hover { opacity: 0.6; }
+
+    .nav-dropdown-chevron {
+      font-family: var(--font-mono); font-size: 9px;
+      color: #ffffff; mix-blend-mode: difference;
+      background: none; border: none; cursor: none;
+      padding: 2px 4px; line-height: 1;
+      transition: opacity 0.2s ease;
+    }
+    .nav-dropdown-chevron:hover { opacity: 0.6; }
+
+    .nav-dropdown-toggle .chevron {
+      display: inline-block;
+      transition: transform 0.25s ease;
+      font-size: 9px; line-height: 1;
+    }
+    .nav-dropdown.open .chevron { transform: rotate(180deg); }
+
+    .nav-dropdown-menu {
+      position: absolute; top: calc(100% + 8px); left: 0;
+      background: transparent;
+      border: none;
+      min-width: 200px;
+      opacity: 0; pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 300;
+    }
+    .nav-dropdown.open .nav-dropdown-menu {
+      opacity: 1; pointer-events: all; transform: translateY(0);
+    }
+    .nav-dropdown-menu a {
+      display: block;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 300;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #ffffff !important; mix-blend-mode: difference;
+      padding: 8px 0;
+      border-bottom: none;
+      transition: opacity 0.15s ease;
+    }
+    .nav-dropdown-menu a:hover { background: transparent; opacity: 0.6; }
+
+    /* Hamburger — mobile only */
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: none; padding: 4px; background: none; border: none; z-index: 201;
+    }
+    .nav-hamburger span {
+      display: block; width: 22px; height: 1px; background: #ffffff;
+      transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
+      transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    nav#mainNav.past-hero .nav-hamburger span { background: #ffffff; }
+
+    /* Fullscreen mobile menu */
+    .menu-overlay {
+      position: fixed; inset: 0; background: var(--black); z-index: 190;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+    }
+    .menu-overlay.open { opacity: 1; pointer-events: all; }
+    .menu-links { list-style: none; text-align: center; }
+    .menu-links li { overflow: hidden; }
+    .menu-links a {
+      display: inline-block; font-family: var(--font-head);
+      font-size: clamp(26px, 5vw, 62px); font-weight: 800; font-stretch: 125%;
+      letter-spacing: -0.02em; color: var(--white); line-height: 1.3; padding: 4px 0;
+      transform: translateY(110%);
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), color 0.2s ease;
+    }
+    .menu-overlay.open .menu-links a { transform: translateY(0); }
+    .menu-links li:nth-child(1) a { transition-delay: 0.05s; }
+    .menu-links li:nth-child(2) a { transition-delay: 0.10s; }
+    .menu-links li:nth-child(3) a { transition-delay: 0.15s; }
+    .menu-links li:nth-child(4) a { transition-delay: 0.20s; }
+    .menu-links li:nth-child(5) a { transition-delay: 0.25s; }
+    .menu-links li:nth-child(6) a { transition-delay: 0.30s; }
+    .menu-links li:nth-child(7) a { transition-delay: 0.35s; }
+    .menu-links li:nth-child(8) a { transition-delay: 0.40s; }
+    .menu-links a:hover { color: var(--grey-mid); }
+
+    /* Mobile: show hamburger, hide inline links */
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+
+    /* ── Shared ── */
+    .section-head {
+      font-family: var(--font-head); font-size: var(--head-size);
+      font-weight: 800; font-stretch: 125%; line-height: var(--head-lh);
+      letter-spacing: -0.02em; text-transform: uppercase; color: var(--black);
+    }
+    .row-divider { width: 100%; height: 1px; background: var(--black); display: block; }
+
+    /* ── ROW 1 — HERO ── */
+    #hero {
+      min-height: 80vh; display: grid; grid-template-columns: 1fr 1fr 1fr;
+      background: var(--black); overflow: hidden;
+    }
+    .hero-col-1 {
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: var(--gutter); padding-top: calc(var(--nav-h) + 24px);
+      position: relative; z-index: 2;
+    }
+    .hero-text-block h1 {
+      display: inline; font-family: var(--font-head); font-size: var(--head-size);
+      font-weight: 800; font-stretch: 125%; line-height: var(--head-lh);
+      letter-spacing: -0.02em; color: var(--white);
+    }
+    .hero-text-block .intro-light {
+      display: inline; font-family: var(--font-head); font-size: var(--head-size);
+      font-weight: 300; font-stretch: 125%; line-height: var(--head-lh);
+      letter-spacing: -0.02em; color: var(--white);
+    }
+    .hero-col-2 { position: relative; z-index: 2; }
+    .hero-col-3 { position: relative; overflow: hidden; min-height: 40vh; background: #1a1a18; }
+    .hero-col-3 video, .hero-col-3 img {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+    }
+    .fade-up {
+      opacity: 0; transform: translateY(24px);
+      animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.1s forwards;
+    }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    /* ── ROW 2 — SERVICES ── */
+    #services {
+      background: var(--white);
+      padding: clamp(40px, 5vw, 72px) var(--gutter);
+    }
+    .services-header { margin-bottom: clamp(16px, 2.5vw, 28px); }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--col-gap); align-items: start; }
+
+    .service-col h3 {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--black);
+      margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--grey-light);
+    }
+    .service-col p {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 300;
+      line-height: 1.85; color: var(--grey-dark); margin-bottom: 12px;
+    }
+    .service-col p:last-child { margin-bottom: 0; }
+    .service-col a { border-bottom: 1px solid var(--grey-mid); transition: border-color 0.2s, color 0.2s; }
+    .service-col a:hover { color: var(--black); border-color: var(--black); }
+
+    /* ── ROW 3 — PROJECTS ── */
+    #projects {
+      min-height: 80vh; background: var(--white);
+      padding: clamp(40px, 5vw, 72px) var(--gutter);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .projects-header { margin-bottom: clamp(16px, 2.5vw, 28px); }
+    .projects-table { width: 100%; }
+
+    .projects-table-head {
+      display: grid; grid-template-columns: 1.6fr 0.7fr 1fr 1.8fr;
+      padding-bottom: 10px; border-bottom: 1px solid var(--black);
+    }
+    .projects-table-head span {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--grey-mid); padding-right: 12px;
+    }
+
+    .project-row {
+      display: grid; grid-template-columns: 1.6fr 0.7fr 1fr 1.8fr;
+      padding: 14px 0; border-bottom: 1px solid var(--grey-light);
+      align-items: baseline; cursor: none; transition: background 0.15s ease;
+      text-decoration: none; color: inherit;
+    }
+    .project-row:hover { background: var(--off-white); }
+
+    /* Rows that are external links get a subtle arrow signal */
+    a.project-row .proj-title::after {
+      content: ' ↗';
+      font-size: 10px;
+      color: var(--grey-mid);
+      transition: color 0.2s;
+    }
+    a.project-row:hover .proj-title::after { color: var(--black); }
+
+    /* Rows that are internal service pages */
+    .project-row.internal .proj-title::after {
+      content: ' →';
+      font-size: 10px;
+      color: var(--grey-mid);
+      transition: color 0.2s;
+    }
+    .project-row.internal:hover .proj-title::after { color: var(--black); }
+
+    .proj-title {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--black); line-height: 1.5; padding-right: 16px;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .proj-year, .proj-company, .proj-desc {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 300;
+      color: var(--grey-dark); line-height: 1.6; padding-right: 16px;
+    }
+
+    /* ── FOOTER ── */
+    #footer { background: var(--black); color: var(--white); padding: clamp(40px, 6vw, 80px) var(--gutter) clamp(28px, 3vw, 40px); }
+    .footer-top {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--col-gap);
+      padding-bottom: clamp(32px, 5vw, 64px); border-bottom: 1px solid #252522; align-items: start;
+    }
+    .footer-tagline {
+      font-family: var(--font-head); font-size: clamp(18px, 2.2vw, 28px);
+      font-weight: 800; font-stretch: 125%; letter-spacing: -0.02em;
+      color: var(--white); line-height: 1.2; margin-bottom: 28px;
+    }
+    .footer-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--black); background: var(--white); padding: 13px 20px;
+      cursor: none; transition: background 0.2s ease;
+    }
+    .footer-cta:hover { background: var(--grey-light); }
+    .footer-cta .arrow { transition: transform 0.2s ease; }
+    .footer-cta:hover .arrow { transform: translateX(5px); }
+    .footer-list-label { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #444442; margin-bottom: 16px; }
+    .footer-list { list-style: none; }
+    .footer-list li { font-family: var(--font-mono); font-size: 12px; font-weight: 300; color: #666664; padding: 6px 0; border-bottom: 1px solid #1c1c1a; transition: color 0.2s ease; cursor: none; }
+    .footer-list li:hover { color: var(--white); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: flex-end; padding-top: 20px; }
+    .footer-bottom p { font-family: var(--font-mono); font-size: 11px; font-weight: 300; color: #444442; line-height: 1.7; }
+    .footer-bottom a { color: #444442; border-bottom: 1px solid #444442; transition: color 0.2s, border-color 0.2s; }
+    .footer-bottom a:hover { color: var(--white); border-color: var(--white); }
+
+    /* ── Reveal ── */
+    .reveal { transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal:not(.visible) { opacity: 0; transform: translateY(18px); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-stagger > * { transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal-stagger:not(.visible) > * { opacity: 0; transform: translateY(14px); }
+    .reveal-stagger.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0s; }
+    .reveal-stagger.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.1s; }
+    .reveal-stagger.visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.2s; }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      #hero { grid-template-columns: 1fr 1fr; }
+      .hero-col-2 { display: none; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .projects-table-head, .project-row { grid-template-columns: 1.4fr 0.6fr 1fr; }
+      .proj-desc { display: none; }
+    }
+    @media (max-width: 600px) {
+      :root { --head-size: clamp(18px, 6vw, 28px); }
+      #hero { grid-template-columns: 1fr; }
+      .hero-col-3 { min-height: 56vw; }
+      .services-grid, .footer-top { grid-template-columns: 1fr; }
+      .projects-table-head { display: none; }
+      .project-row { grid-template-columns: 1fr 1fr; }
+      .proj-year, .proj-desc { display: none; }
+      #services, #projects { min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cursor-ring" aria-hidden="true"></div>
+  <div id="cursor-dot"  aria-hidden="true"></div>
+
+  <!-- Mobile fullscreen menu -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <nav aria-label="Mobile navigation">
+      <ul class="menu-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services/indie-web-design.html">Indie Web Design</a></li>
+        <li><a href="services/seo-geo-copywriting.html">SEO &amp; GEO</a></li>
+        <li><a href="services/wordpress-design.html">WordPress</a></li>
+        <li><a href="services/shopify-design.html">Shopify</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- ── NAV ── -->
+  <nav id="mainNav" aria-label="Primary navigation">
+    <a href="index.html" class="nav-logo" aria-label="Home">11h21.studio</a>
+
+    <!-- Desktop inline links -->
+    <ul class="nav-links" role="list">
+      <li><a href="index.html">Home</a></li>
+
+      <!-- Services / Projects dropdown -->
+      <li class="nav-dropdown" id="navDropdown">
+        <span class="nav-dropdown-toggle-wrap">
+          <a href="services.html" class="nav-dropdown-label">Services</a>
+          <button class="nav-dropdown-chevron" aria-haspopup="true" aria-expanded="false" id="dropdownToggle" aria-label="Toggle services menu">
+            <span class="chevron" aria-hidden="true">▾</span>
+          </button>
+        </span>
+        <div class="nav-dropdown-menu" role="menu" aria-label="Services">
+          <a href="services.html" role="menuitem">All Services</a>
+          <a href="services/indie-web-design.html" role="menuitem">HTML Web Design</a>
+          <a href="services/seo-geo-copywriting.html" role="menuitem">SEO &amp; GEO Copywriting</a>
+          <a href="services/wordpress-design.html" role="menuitem">WordPress Design</a>
+          <a href="services/shopify-design.html" role="menuitem">Shopify Design</a>
+        </div>
+      </li>
+
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+
+    <!-- Mobile hamburger -->
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="menuOverlay">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ── ROW 1 — HERO ── -->
+  <section id="hero" aria-label="Introduction">
+    <div class="hero-col-1">
+      <div class="hero-text-block fade-up">
+        <h1>Web design, SEO and copywriting</h1><span class="intro-light"> for independent brands and creative studios, built to last.</span>
+      </div>
+    </div>
+    <div class="hero-col-2" aria-hidden="true"></div>
+    <div class="hero-col-3">
+      <!--
+        9:16 video (1080×1920): assets/homepage/hero.mp4 + hero.webm + hero-poster.jpg
+      -->
+      <video autoplay muted loop playsinline preload="metadata"
+        poster="assets/homepage/hero-poster.jpg"
+        aria-label="Studio showreel" title="11h21 Studio - Web Design">
+        <source src="assets/homepage/hero.webm" type="video/webm" />
+        <source src="assets/homepage/hero.mp4"  type="video/mp4" />
+        <img src="assets/homepage/hero-poster.jpg"
+          alt="Minimal web design for independent creative brands"
+          width="1080" height="1920" loading="eager" fetchpriority="high" />
+      </video>
+    </div>
+  </section>
+
+  <span class="row-divider" role="separator" aria-hidden="true"></span>
+
+  <!-- ── ROW 2 — SERVICES ── -->
+  <section id="services" aria-labelledby="services-heading">
+    <div class="services-header reveal">
+      <h2 id="services-heading" class="section-head">What we do</h2>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-col">
+        <h3>Web Design &amp; Build</h3>
+        <p>Clean, functional websites for independent projects and creative businesses. I work across <a href="services/shopify-design.html">Shopify</a>, <a href="services/wordpress-design.html">WordPress</a>, Squarespace, Readymag and hand-coded HTML; choosing the right tool for each brief, not the easiest one for us.</p>
+        <p>Fast turnaround, direct access, no agency overhead. For clients who need to launch before the moment passes, I offer guerrilla-style <a href="services/indie-web-design.html">HTML builds</a> that go live in days and cost a fraction of a traditional agency quote.</p>
+      </div>
+
+      <div class="service-col">
+        <h3>CMS Migration &amp; Upkeep</h3>
+        <p>Already on a platform that no longer serves you? I relocate, rebuild and relaunch; carrying across your content, improving your structure, making sure nothing gets lost in the move. Every migration is an opportunity to fix the things that were never quite right the first time.</p>
+        <p>Ongoing upkeep packages are available across all platforms; so your site stays current, secure and performing without you having to think about it. One message and it is handled.</p>
+      </div>
+
+      <div class="service-col">
+        <h3>SEO, GEO &amp; Content</h3>
+        <p>Strategy-led <a href="services/seo-geo-copywriting.html">SEO and AI-era GEO copywriting</a> for independent brands. I work at every level; keyword strategy, heading architecture, meta optimisation, Schema.org structured data, multilingual copy in English and Dutch; and I deploy everything directly into your CMS.</p>
+        <p>DTP design, social content creation and project management; all shaped by the same minimal, considered aesthetic as my main studio, <a href="https://www.11h21.com" target="_blank" rel="noopener">11h21</a>.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <span class="row-divider" role="separator" aria-hidden="true"></span>
+
+  <!-- ── ROW 3 — PROJECTS ── -->
+  <section id="projects" aria-labelledby="projects-heading">
+    <div class="projects-header reveal">
+      <h2 id="projects-heading" class="section-head">Projects</h2>
+    </div>
+
+    <div class="projects-table" role="table" aria-label="Project list">
+
+      <div class="projects-table-head" role="row">
+        <span role="columnheader">Project</span>
+        <span role="columnheader">Year</span>
+        <span role="columnheader">Company</span>
+        <span role="columnheader">Description</span>
+      </div>
+
+      <!-- ── 4 SERVICE CASE STUDIES — link to internal service pages ── -->
+      <a href="services/indie-web-design.html" class="project-row internal" role="row">
+        <span class="proj-title"   role="cell">Guerrilla HTML Build</span>
+        <span class="proj-year"    role="cell">2023</span>
+        <span class="proj-company" role="cell">Bar Zeezigt, Rotterdam</span>
+        <span class="proj-desc"    role="cell">Fast HTML site for indie bar launch. Readymag to hand-coded conversion, full ownership.</span>
+      </a>
+
+      <a href="services/seo-geo-copywriting.html" class="project-row internal" role="row">
+        <span class="proj-title"   role="cell">SEO &amp; GEO Strategy</span>
+        <span class="proj-year"    role="cell">2024</span>
+        <span class="proj-company" role="cell">Bagbox Group</span>
+        <span class="proj-desc"    role="cell">Full content strategy, GEO copy, AI imagery and CMS upload for B2B bioprocess brand.</span>
+      </a>
+
+      <a href="services/wordpress-design.html" class="project-row internal" role="row">
+        <span class="proj-title"   role="cell">WordPress Design &amp; Build</span>
+        <span class="proj-year"    role="cell">2024</span>
+        <span class="proj-company" role="cell">FC Holm Architects</span>
+        <span class="proj-desc"    role="cell">Large WordPress site, premium theme, SEO strategy and on-location photography.</span>
+      </a>
+
+      <a href="services/shopify-design.html" class="project-row internal" role="row">
+        <span class="proj-title"   role="cell">Shopify Build &amp; Schema</span>
+        <span class="proj-year"    role="cell">2023 – Present</span>
+        <span class="proj-company" role="cell">11H21 Photography</span>
+        <span class="proj-desc"    role="cell">Custom Liquid, product templates, static portfolio pages, rich schema stack and GEO copy.</span>
+      </a>
+
+      <!-- ── ADDITIONAL PROJECTS — open external links in new tab ── -->
+      <a href="https://www.lovebomb.co.za/" target="_blank" rel="noopener" class="project-row" role="row">
+        <span class="proj-title"   role="cell">Squarespace Build</span>
+        <span class="proj-year"    role="cell">2025</span>
+        <span class="proj-company" role="cell">Lovebomb</span>
+        <span class="proj-desc"    role="cell">Minimal Squarespace quick-deploy site for NGO. Fast turnaround, clean aesthetic.</span>
+      </a>
+
+      <a href="https://www.conversationinitiative.co.za/" target="_blank" rel="noopener" class="project-row" role="row">
+        <span class="proj-title"   role="cell">WordPress Community Site</span>
+        <span class="proj-year"    role="cell">2023</span>
+        <span class="proj-company" role="cell">Conversation Initiative</span>
+        <span class="proj-desc"    role="cell">WordPress build for community organisation; content architecture and full site design.</span>
+      </a>
+
+      <a href="https://www.stresssa.co.za/" target="_blank" rel="noopener" class="project-row" role="row">
+        <span class="proj-title"   role="cell">WordPress Site Build</span>
+        <span class="proj-year"    role="cell">2023</span>
+        <span class="proj-company" role="cell">StressSA</span>
+        <span class="proj-desc"    role="cell">WordPress site for mental health organisation; clear information hierarchy and SEO.</span>
+      </a>
+
+      <a href="https://www.srt-plastics.com/" target="_blank" rel="noopener" class="project-row" role="row">
+        <span class="proj-title"   role="cell">SEO Copywriting</span>
+        <span class="proj-year"    role="cell">2026</span>
+        <span class="proj-company" role="cell">SRT Plastics</span>
+        <span class="proj-desc"    role="cell">Full SEO content strategy and copy for B2B plastics manufacturer. No web dev.</span>
+      </a>
+
+      <a href="https://www.megafab.co.uk/" target="_blank" rel="noopener" class="project-row" role="row">
+        <span class="proj-title"   role="cell">SEO Copywriting</span>
+        <span class="proj-year"    role="cell">2025</span>
+        <span class="proj-company" role="cell">Megafab</span>
+        <span class="proj-desc"    role="cell">SEO strategy and optimised copy for UK fabrication company. No web dev.</span>
+      </a>
+
+    </div>
+  </section>
+
+  <span class="row-divider" role="separator" aria-hidden="true"></span>
+
+  <!-- ── FOOTER ── -->
+  <footer id="footer" aria-label="Site footer">
+    <div class="footer-top">
+      <div>
+        <p class="footer-tagline">Let's build something considered.</p>
+        <a href="contact.html" class="footer-cta">Get in touch <span class="arrow">→</span></a>
+      </div>
+      <div>
+        <p class="footer-list-label">Services</p>
+        <ul class="footer-list">
+          <li><a href="services/indie-web-design.html">Web Design &amp; Build</a></li>
+          <li><a href="services/seo-geo-copywriting.html">SEO &amp; GEO Strategy</a></li>
+          <li><a href="services/wordpress-design.html">WordPress Design</a></li>
+          <li><a href="services/shopify-design.html">Shopify Design</a></li>
+          <li>CMS Migration &amp; Upkeep</li>
+          <li>DTP &amp; Social Content</li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-list-label">Platforms</p>
+        <ul class="footer-list">
+          <li>Shopify</li>
+          <li>WordPress</li>
+          <li>Squarespace</li>
+          <li>Readymag</li>
+          <li>Custom CMS</li>
+          <li>Clean HTML / AI-generated</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 11h21.studio. A <a href="https://www.11h21.com" target="_blank" rel="noopener">11h21</a> project. &nbsp;·&nbsp; Available worldwide.</p>
+      <p><a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="terms.html">Terms</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // ── Cursor ──
+    const ring = document.getElementById('cursor-ring');
+    const dot  = document.getElementById('cursor-dot');
+    let tx = -100, ty = -100, rx = -100, ry = -100;
+    document.addEventListener('mousemove', e => {
+      tx = e.clientX; ty = e.clientY;
+      dot.style.left = tx + 'px'; dot.style.top = ty + 'px';
+    });
+    (function lerp() {
+      rx += (tx - rx) * 0.15; ry += (ty - ry) * 0.15;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(lerp);
+    })();
+    document.querySelectorAll('a, button, .project-row, .footer-list li').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+    document.addEventListener('mousedown', () => document.body.classList.add('cursor-click'));
+    document.addEventListener('mouseup',   () => document.body.classList.remove('cursor-click'));
+
+    // ── Nav flip past hero ──
+    const mainNav = document.getElementById('mainNav');
+    new IntersectionObserver(entries => {
+      mainNav.classList.toggle('past-hero', !entries[0].isIntersecting);
+    }, { threshold: 0.05 }).observe(document.getElementById('hero'));
+
+    // ── Dropdown ──
+    const dropdownToggle = document.getElementById('dropdownToggle');
+    const navDropdown    = document.getElementById('navDropdown');
+    dropdownToggle.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = navDropdown.classList.toggle('open');
+      mainNav.classList.toggle('dropdown-open', isOpen);
+      dropdownToggle.setAttribute('aria-expanded', isOpen);
+    });
+    document.addEventListener('click', () => {
+      navDropdown.classList.remove('open');
+      mainNav.classList.remove('dropdown-open');
+      dropdownToggle.setAttribute('aria-expanded', false);
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        navDropdown.classList.remove('open');
+        mainNav.classList.remove('dropdown-open');
+        dropdownToggle.setAttribute('aria-expanded', false);
+      }
+    });
+
+    // ── Mobile hamburger ──
+    const hamburger   = document.getElementById('hamburger');
+    const menuOverlay = document.getElementById('menuOverlay');
+    hamburger.addEventListener('click', () => {
+      const open = hamburger.classList.toggle('open');
+      menuOverlay.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open);
+      menuOverlay.setAttribute('aria-hidden', !open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    menuOverlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      menuOverlay.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', false);
+      menuOverlay.setAttribute('aria-hidden', true);
+      document.body.style.overflow = '';
+    }));
+
+    // ── Scroll reveal ──
+    function activateReveal(el) { el.classList.add('visible'); }
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { activateReveal(e.target); ro.unobserve(e.target); } });
+    }, { threshold: 0.0, rootMargin: '0px 0px -10px 0px' });
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) { activateReveal(el); } else { ro.observe(el); }
+    });
+  </script>
+</body>
+</html>

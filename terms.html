@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — 11h21.studio</title>
+  <meta name="description" content="Terms of service for 11h21.studio. The basis on which we provide web design, SEO and copywriting services." />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://11h21.studio/terms.html" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white: #ffffff; --off-white: #f6f5f1; --grey-light: #e8e8e6;
+      --grey-mid: #9a9a96; --grey-dark: #3a3a38; --black: #111110;
+      --font-head: 'Archivo', sans-serif; --font-mono: 'IBM Plex Mono', monospace;
+      --nav-h: 52px; --gutter: clamp(24px, 4vw, 56px); --col-gap: clamp(16px, 2vw, 32px);
+      --head-size: clamp(22px, 3.4vw, 49px); --head-lh: 1.1;
+    }
+    html { font-size: 13px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-mono); font-weight: 300; color: var(--black); background: var(--white); cursor: none; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* Cursor */
+    #cursor-ring {
+      position: fixed; width: 36px; height: 36px;
+      border: 1.5px solid #ffffff; border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: difference;
+      transition: width 0.25s ease, height 0.25s ease;
+      will-change: left, top; left: -100px; top: -100px;
+    }
+    #cursor-dot {
+      position: fixed; width: 6px; height: 6px;
+      background: #ffffff; border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: difference; will-change: left, top;
+      left: -100px; top: -100px;
+    }
+    body.cursor-hover #cursor-ring { width: 56px; height: 56px; }
+    body.cursor-click #cursor-ring { width: 22px; height: 22px; }
+    @media (hover: none) { #cursor-ring, #cursor-dot { display: none; } }
+
+    /* Nav */
+    nav#mainNav {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 var(--gutter); z-index: 200; background: transparent;
+    }
+    nav#mainNav::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(0, 0, 0, 0.72);
+      transition: height 0.25s ease, background 0.3s ease;
+      z-index: -1; pointer-events: none;
+    }
+    nav#mainNav.dropdown-open::before { height: calc(var(--nav-h) + 180px); }
+    .nav-logo {
+      font-family: var(--font-mono); font-weight: 500;
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: #ffffff; mix-blend-mode: difference;
+    }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-mono); font-weight: 400;
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #ffffff; mix-blend-mode: difference; transition: opacity 0.2s ease;
+    }
+    .nav-links a:hover { opacity: 0.6; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-toggle-wrap { display: flex; align-items: center; gap: 4px; }
+    .nav-dropdown-label {
+      font-family: var(--font-mono); font-weight: 400;
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #ffffff; mix-blend-mode: difference; transition: opacity 0.2s ease;
+    }
+    .nav-dropdown-label:hover { opacity: 0.6; }
+    .nav-dropdown-chevron {
+      font-family: var(--font-mono); font-size: 9px;
+      color: #ffffff; mix-blend-mode: difference;
+      background: none; border: none; cursor: none;
+      padding: 2px 4px; line-height: 1; transition: opacity 0.2s ease;
+    }
+    .nav-dropdown-chevron:hover { opacity: 0.6; }
+    .nav-dropdown-chevron .chevron { display: inline-block; transition: transform 0.25s ease; }
+    .nav-dropdown.open .chevron { transform: rotate(180deg); }
+    .nav-dropdown-menu {
+      position: absolute; top: calc(100% + 8px); left: 0;
+      background: transparent; border: none; min-width: 200px;
+      opacity: 0; pointer-events: none; transform: translateY(-6px);
+      transition: opacity 0.2s ease, transform 0.2s ease; z-index: 300;
+    }
+    .nav-dropdown.open .nav-dropdown-menu { opacity: 1; pointer-events: all; transform: translateY(0); }
+    .nav-dropdown-menu a {
+      display: block; font-family: var(--font-mono); font-size: 11px; font-weight: 300;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #ffffff !important; mix-blend-mode: difference;
+      padding: 8px 0; border-bottom: none; transition: opacity 0.15s ease;
+    }
+    .nav-dropdown-menu a:hover { opacity: 0.6; }
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: none; padding: 4px; background: none; border: none; z-index: 201;
+    }
+    .nav-hamburger span {
+      display: block; width: 22px; height: 1px; background: #ffffff;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .menu-overlay {
+      position: fixed; inset: 0; background: var(--black); z-index: 190;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+    }
+    .menu-overlay.open { opacity: 1; pointer-events: all; }
+    .menu-links { list-style: none; text-align: center; }
+    .menu-links li { overflow: hidden; }
+    .menu-links a {
+      display: inline-block; font-family: var(--font-head);
+      font-size: clamp(26px, 5vw, 62px); font-weight: 800; font-stretch: 125%;
+      letter-spacing: -0.02em; color: var(--white); line-height: 1.3; padding: 4px 0;
+      transform: translateY(110%);
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), color 0.2s ease;
+    }
+    .menu-overlay.open .menu-links a { transform: translateY(0); }
+    .menu-links li:nth-child(1) a { transition-delay: 0.05s; }
+    .menu-links li:nth-child(2) a { transition-delay: 0.10s; }
+    .menu-links li:nth-child(3) a { transition-delay: 0.15s; }
+    .menu-links li:nth-child(4) a { transition-delay: 0.20s; }
+    .menu-links li:nth-child(5) a { transition-delay: 0.25s; }
+    .menu-links li:nth-child(6) a { transition-delay: 0.30s; }
+    .menu-links a:hover { color: var(--grey-mid); }
+    @media (max-width: 700px) { .nav-links { display: none; } .nav-hamburger { display: flex; } }
+
+    /* Content */
+    #content {
+      padding: calc(var(--nav-h) + clamp(40px, 6vw, 80px)) var(--gutter) clamp(60px, 8vw, 100px);
+      max-width: 720px;
+    }
+    .page-title {
+      font-family: var(--font-head); font-size: var(--head-size);
+      font-weight: 800; font-stretch: 125%; line-height: var(--head-lh);
+      letter-spacing: -0.02em; text-transform: uppercase; color: var(--black);
+      margin-bottom: clamp(28px, 4vw, 48px);
+    }
+    .policy-section { margin-bottom: 36px; }
+    .policy-section h2 {
+      font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--black);
+      margin-bottom: 10px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--grey-light);
+    }
+    .policy-section p {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 300;
+      line-height: 1.9; color: var(--grey-dark); margin-bottom: 10px;
+    }
+    .policy-section p:last-child { margin-bottom: 0; }
+    .policy-section a { border-bottom: 1px solid var(--grey-mid); transition: border-color 0.2s, color 0.2s; }
+    .policy-section a:hover { color: var(--black); border-color: var(--black); }
+    .updated {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 300;
+      color: var(--grey-mid); letter-spacing: 0.06em;
+      text-transform: uppercase; margin-bottom: clamp(28px, 4vw, 48px);
+    }
+
+    /* Footer */
+    #footer { background: var(--black); color: var(--white); padding: clamp(40px, 6vw, 80px) var(--gutter) clamp(28px, 3vw, 40px); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+    .footer-bottom p { font-family: var(--font-mono); font-size: 11px; font-weight: 300; color: #444442; line-height: 1.7; }
+    .footer-bottom a { color: #444442; border-bottom: 1px solid #444442; transition: color 0.2s, border-color 0.2s; }
+    .footer-bottom a:hover { color: var(--white); border-color: var(--white); }
+  </style>
+</head>
+<body>
+
+  <div id="cursor-ring" aria-hidden="true"></div>
+  <div id="cursor-dot"  aria-hidden="true"></div>
+
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <nav aria-label="Mobile navigation">
+      <ul class="menu-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services/indie-web-design.html">HTML Web Design</a></li>
+        <li><a href="services/seo-geo-copywriting.html">SEO &amp; GEO</a></li>
+        <li><a href="services/wordpress-design.html">WordPress</a></li>
+        <li><a href="services/shopify-design.html">Shopify</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <nav id="mainNav" aria-label="Primary navigation">
+    <a href="index.html" class="nav-logo" aria-label="Home">11h21.studio</a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html">Home</a></li>
+      <li class="nav-dropdown" id="navDropdown">
+        <span class="nav-dropdown-toggle-wrap">
+          <a href="services.html" class="nav-dropdown-label">Services</a>
+          <button class="nav-dropdown-chevron" aria-haspopup="true" aria-expanded="false" id="dropdownToggle" aria-label="Toggle services menu">
+            <span class="chevron" aria-hidden="true">&#9660;</span>
+          </button>
+        </span>
+        <div class="nav-dropdown-menu" role="menu" aria-label="Services">
+          <a href="services.html" role="menuitem">All Services</a>
+          <a href="services/indie-web-design.html" role="menuitem">HTML Web Design</a>
+          <a href="services/seo-geo-copywriting.html" role="menuitem">SEO &amp; GEO Copywriting</a>
+          <a href="services/wordpress-design.html" role="menuitem">WordPress Design</a>
+          <a href="services/shopify-design.html" role="menuitem">Shopify Design</a>
+        </div>
+      </li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="menuOverlay">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main id="content">
+    <p class="updated">Last updated: April 2026</p>
+    <h1 class="page-title">Terms of Service</h1>
+
+    <div class="policy-section">
+      <h2>Overview</h2>
+      <p>These terms govern the provision of web design, SEO, copywriting and related services by 11h21.studio (Alfred Lor) to clients. By commissioning work you agree to these terms.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>Services and scope</h2>
+      <p>The scope of each project is agreed in writing before work begins, either by email or a brief document. Changes to scope during a project may affect timeline and cost; these will be discussed and agreed before proceeding.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>Payment</h2>
+      <p>A deposit of 50% is required before work begins on any project. The remaining balance is due on completion and before final files or credentials are handed over. Payment terms are 14 days from invoice unless otherwise agreed.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>Ownership and intellectual property</h2>
+      <p>On receipt of full payment, all work product created for a client becomes their property. This includes code, copy, design files and any other deliverables specific to their project.</p>
+      <p>11h21.studio retains the right to show completed work in its portfolio unless the client requests otherwise in writing.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>Client responsibilities</h2>
+      <p>Clients are responsible for supplying accurate information, content and materials required to complete the project. Delays caused by late or incomplete client input may affect the project timeline.</p>
+      <p>Clients are responsible for ensuring they have the right to use any third-party content (images, text, logos) provided to 11h21.studio for inclusion in their project.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>Revisions</h2>
+      <p>Each project includes a reasonable number of revision rounds as agreed at the outset. Significant changes in direction after approval of a phase may be treated as new scope.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>Limitation of liability</h2>
+      <p>11h21.studio is not liable for any indirect, incidental or consequential loss arising from the use of delivered work. Our total liability for any claim is limited to the fees paid for the specific project concerned.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>Governing law</h2>
+      <p>These terms are governed by the laws of the Netherlands. Any disputes will be resolved under Dutch jurisdiction.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>Contact</h2>
+      <p>Questions about these terms: <a href="mailto:studio.11h21@gmail.com">studio.11h21@gmail.com</a></p>
+    </div>
+  </main>
+
+  <footer id="footer" aria-label="Site footer">
+    <div class="footer-bottom">
+      <p>© 2025 11h21.studio. A <a href="https://www.11h21.com" target="_blank" rel="noopener">11h21</a> project. &nbsp;·&nbsp; Available worldwide.</p>
+      <p><a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="terms.html">Terms</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const ring = document.getElementById('cursor-ring');
+    const dot  = document.getElementById('cursor-dot');
+    let tx = -100, ty = -100, rx = -100, ry = -100;
+    let cursorActive = false;
+    document.addEventListener('mousemove', e => {
+      tx = e.clientX; ty = e.clientY;
+      dot.style.left = tx + 'px'; dot.style.top = ty + 'px';
+      cursorActive = true;
+    });
+    (function lerp() {
+      if (cursorActive) {
+        rx += (tx - rx) * 0.15; ry += (ty - ry) * 0.15;
+        ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      }
+      requestAnimationFrame(lerp);
+    })();
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+    document.addEventListener('mousedown', () => document.body.classList.add('cursor-click'));
+    document.addEventListener('mouseup',   () => document.body.classList.remove('cursor-click'));
+
+    const mainNav = document.getElementById('mainNav');
+    const dropdownToggle = document.getElementById('dropdownToggle');
+    const navDropdown    = document.getElementById('navDropdown');
+    dropdownToggle.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = navDropdown.classList.toggle('open');
+      mainNav.classList.toggle('dropdown-open', isOpen);
+      dropdownToggle.setAttribute('aria-expanded', isOpen);
+    });
+    document.addEventListener('click', () => {
+      navDropdown.classList.remove('open');
+      mainNav.classList.remove('dropdown-open');
+      dropdownToggle.setAttribute('aria-expanded', false);
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        navDropdown.classList.remove('open');
+        mainNav.classList.remove('dropdown-open');
+        dropdownToggle.setAttribute('aria-expanded', false);
+      }
+    });
+    const hamburger   = document.getElementById('hamburger');
+    const menuOverlay = document.getElementById('menuOverlay');
+    hamburger.addEventListener('click', () => {
+      const open = hamburger.classList.toggle('open');
+      menuOverlay.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open);
+      menuOverlay.setAttribute('aria-hidden', !open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    menuOverlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      menuOverlay.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', false);
+      menuOverlay.setAttribute('aria-hidden', true);
+      document.body.style.overflow = '';
+    }));
+  </script>
+</body>
+</html>
