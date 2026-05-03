@@ -7,7 +7,6 @@
   <meta name="description" content="Get in touch with 11h21.studio for web design, SEO strategy, GEO copywriting, WordPress, Shopify and CMS enquiries. Working with independent brands and creative businesses worldwide." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://11h21.studio/contact.html" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'><rect width='1' height='1' fill='%23fbe74d'/></svg>" />
 
   <meta name="geo.region" content="NL-ZH" />
   <meta name="geo.placename" content="The Hague, Netherlands" />
@@ -115,10 +114,7 @@
     img { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
 
-    /* ── Cursor ──
-       Both elements use mix-blend-mode: difference so they invert on any bg.
-       cursor: none on body hides the default OS cursor sitewide.
-       pointer-events: none ensures they never block clicks. */
+    /* ── Cursor ── */
     #cursor-ring {
       position: fixed; width: 36px; height: 36px;
       border: 1.5px solid #ffffff; border-radius: 50%;
@@ -127,7 +123,6 @@
       mix-blend-mode: difference;
       transition: width 0.25s ease, height 0.25s ease;
       will-change: left, top;
-      /* Start offscreen so it doesn't flash at 0,0 */
       left: -100px; top: -100px;
     }
     #cursor-dot {
@@ -141,7 +136,6 @@
     }
     body.cursor-hover #cursor-ring { width: 56px; height: 56px; }
     body.cursor-click #cursor-ring { width: 22px; height: 22px; }
-    /* Hide custom cursor on touch devices — they don't have a pointer */
     @media (hover: none) { #cursor-ring, #cursor-dot { display: none; } }
 
     /* ── Nav ── */
@@ -150,55 +144,46 @@
       width: 100%; height: var(--nav-h);
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 var(--gutter);
-      z-index: 200; background: transparent;
+      z-index: 200; 
+      background: var(--white); 
+      border-bottom: 1px solid var(--black);
     }
-    /* Dark matt behind nav — expands when dropdown is open */
-    nav#mainNav::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: var(--nav-h);
-      background: rgba(0, 0, 0, 0.50);
-      transition: height 0.25s ease, background 0.3s ease;
-      z-index: -1; pointer-events: none;
-    }
-    nav#mainNav.dropdown-open::before { height: calc(var(--nav-h) + 180px); }
-    nav#mainNav.past-hero::before { background: rgba(0, 0, 0, 0.72); }
-    nav#mainNav.past-hero.dropdown-open::before { height: calc(var(--nav-h) + 180px); background: rgba(0, 0, 0, 0.85); }
+    
     .nav-logo {
       font-family: var(--font-mono); font-weight: 500;
       font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-      color: #ffffff; mix-blend-mode: difference;
+      color: var(--black);
     }
     .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
     .nav-links a {
       font-family: var(--font-mono); font-weight: 400;
       font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-      color: #ffffff; mix-blend-mode: difference; transition: opacity 0.2s ease;
+      color: var(--black); transition: opacity 0.2s ease;
     }
     .nav-links a:hover { opacity: 0.6; }
 
-    /* Split Services label + chevron */
     .nav-dropdown { position: relative; }
     .nav-dropdown-toggle-wrap { display: flex; align-items: center; gap: 4px; }
     .nav-dropdown-label {
       font-family: var(--font-mono); font-weight: 400;
       font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-      color: #ffffff; mix-blend-mode: difference; transition: opacity 0.2s ease;
+      color: var(--black); transition: opacity 0.2s ease;
     }
     .nav-dropdown-label:hover { opacity: 0.6; }
     .nav-dropdown-chevron {
-      font-family: var(--font-mono); font-size: 13px;
-      color: #ffffff; mix-blend-mode: difference;
+      font-family: var(--font-mono); font-size: 9px;
+      color: var(--black);
       background: none; border: none; cursor: none;
-      padding: 6px 8px; line-height: 1; transition: opacity 0.2s ease;
+      padding: 2px 4px; line-height: 1; transition: opacity 0.2s ease;
     }
     .nav-dropdown-chevron:hover { opacity: 0.6; }
     .nav-dropdown-chevron .chevron { display: inline-block; transition: transform 0.25s ease; }
     .nav-dropdown.open .chevron { transform: rotate(180deg); }
 
     .nav-dropdown-menu {
-      position: absolute; top: calc(100% + 8px); left: 0;
-      background: transparent; border: none; min-width: 200px;
+      position: absolute; top: calc(100% + 8px); left: -16px;
+      background: var(--white); border: 1px solid var(--black); min-width: 200px;
+      padding: 8px 16px;
       opacity: 0; pointer-events: none; transform: translateY(-6px);
       transition: opacity 0.2s ease, transform 0.2s ease; z-index: 300;
     }
@@ -206,24 +191,24 @@
     .nav-dropdown-menu a {
       display: block; font-family: var(--font-mono); font-size: 11px; font-weight: 300;
       letter-spacing: 0.08em; text-transform: uppercase;
-      color: #ffffff !important; mix-blend-mode: difference;
+      color: var(--black) !important;
       padding: 8px 0; border-bottom: none; transition: opacity 0.15s ease;
     }
-    .nav-dropdown-menu a:hover { opacity: 0.6; }
+    .nav-dropdown-menu a:hover { background: transparent; opacity: 0.6; }
 
     .nav-hamburger {
       display: none; flex-direction: column; gap: 5px;
       cursor: none; padding: 4px; background: none; border: none; z-index: 201;
     }
     .nav-hamburger span {
-      display: block; width: 22px; height: 1px; background: #ffffff;
+      display: block; width: 22px; height: 1px; background: var(--black);
       transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
       transform-origin: center;
     }
+    .nav-hamburger.open span { background: var(--white); }
     .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
     .nav-hamburger.open span:nth-child(2) { opacity: 0; }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-    nav#mainNav.past-hero .nav-hamburger span { background: #ffffff; }
 
     .menu-overlay {
       position: fixed; inset: 0; background: var(--black); z-index: 190;
@@ -261,7 +246,7 @@
     /* ── ROW 1 — HERO ── */
     #hero {
       min-height: 80vh; display: grid; grid-template-columns: 1fr 1fr 1fr;
-      background: var(--black); overflow: hidden;
+      background: var(--white); overflow: hidden;
     }
     .hero-col-1 {
       display: flex; flex-direction: column; justify-content: flex-end;
@@ -271,15 +256,19 @@
     .hero-text-block h1 {
       display: inline; font-family: var(--font-head); font-size: var(--head-size);
       font-weight: 800; font-stretch: 125%; line-height: var(--head-lh);
-      letter-spacing: -0.02em; color: var(--white);
+      letter-spacing: -0.02em; color: var(--black);
     }
     .hero-text-block .intro-light {
       display: inline; font-family: var(--font-head); font-size: var(--head-size);
       font-weight: 300; font-stretch: 125%; line-height: var(--head-lh);
-      letter-spacing: -0.02em; color: var(--white);
+      letter-spacing: -0.02em; color: var(--black);
     }
     .hero-col-2 { position: relative; z-index: 2; }
-    .hero-col-3 { position: relative; overflow: hidden; min-height: 40vh; background: #1a1a18; }
+    .hero-col-3 { 
+      position: relative; 
+      overflow: hidden; 
+      border-left: 1px solid var(--black);
+    }
     .hero-col-3 img {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       object-fit: cover; object-position: center top;
@@ -290,16 +279,32 @@
     }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-    /* ── ROW 2 — CONTACT ── */
-    #contact-detail {
+    /* ── ROW 2 — CONTACT HEADER ── */
+    #contact-header-row {
       background: var(--white);
-      padding: clamp(40px, 5vw, 72px) var(--gutter);
+      padding: clamp(60px, 8vw, 100px) var(--gutter);
     }
-    .contact-header { margin-bottom: clamp(16px, 2.5vw, 28px); }
+    .contact-header { margin-bottom: 0; }
+    .contact-label {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-mid); margin-bottom: 12px;
+    }
+
+    /* ── ROW 3 — CONTACT COLUMNS ── */
+    #contact-grid-row {
+      background: var(--black);
+    }
     .contact-grid {
-      display: grid; grid-template-columns: 1fr 1fr 1fr;
-      gap: var(--col-gap); align-items: start;
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1px; align-items: stretch;
     }
+    .contact-col {
+      background: var(--white);
+      padding: clamp(48px, 5vw, 80px) clamp(32px, 4vw, 56px);
+    }
+    .contact-col:nth-child(1) { padding-left: var(--gutter); }
+    .contact-col:nth-child(2) { padding-right: var(--gutter); }
+
     .contact-col h3 {
       font-family: var(--font-mono); font-size: 13px; font-weight: 500;
       letter-spacing: 0.1em; text-transform: uppercase; color: var(--black);
@@ -314,7 +319,7 @@
     .contact-col a { border-bottom: 1px solid var(--grey-mid); transition: border-color 0.2s, color 0.2s; }
     .contact-col a:hover { color: var(--black); border-color: var(--black); }
 
-    /* Visible plain-text email — selectable and copyable */
+    /* Visible plain-text email */
     .email-display {
       font-family: var(--font-mono); font-size: 12px; font-weight: 400;
       color: var(--black); letter-spacing: 0.04em;
@@ -327,10 +332,10 @@
     /* FAQ */
     .faq-list { display: flex; flex-direction: column; }
     .faq-item { border-bottom: 1px solid var(--grey-light); padding: 14px 0; }
-    .faq-item:first-child { border-top: 1px solid var(--grey-light); }
+    
     .faq-question {
-      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
-      color: var(--black); letter-spacing: 0.02em;
+      font-family: var(--font-mono); font-size: 12px; font-weight: 300;
+      line-height: 1.85; color: var(--grey-dark);
       background: none; border: none; width: 100%;
       text-align: left; cursor: none; padding: 0;
       display: flex; justify-content: space-between; align-items: center; gap: 12px;
@@ -350,32 +355,50 @@
     .faq-item.open .faq-answer { max-height: 300px; padding-top: 12px; }
 
     /* ── Footer ── */
-    #footer { background: var(--black); color: var(--white); padding: clamp(40px, 6vw, 80px) var(--gutter) clamp(28px, 3vw, 40px); }
+    #footer { 
+      background: var(--white); 
+      color: var(--black); 
+      padding: clamp(40px, 6vw, 80px) var(--gutter) clamp(28px, 3vw, 40px); 
+    }
     .footer-top {
       display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--col-gap);
-      padding-bottom: clamp(32px, 5vw, 64px); border-bottom: 1px solid #252522; align-items: start;
+      padding-bottom: clamp(32px, 5vw, 64px); border-bottom: 1px solid var(--black); align-items: start;
     }
     .footer-tagline {
       font-family: var(--font-head); font-size: clamp(18px, 2.2vw, 28px);
       font-weight: 800; font-stretch: 125%; letter-spacing: -0.02em;
-      color: var(--white); line-height: 1.2; margin-bottom: 28px;
+      color: var(--black); line-height: 1.2; margin-bottom: 28px;
     }
-    .footer-email { font-family: var(--font-mono); font-size: 12px; font-weight: 300; color: var(--grey-mid); margin-bottom: 20px; letter-spacing: 0.04em; }
-    .footer-email a { color: var(--white); border-bottom: 1px solid #3a3a38; transition: border-color 0.2s ease; }
-    .footer-email a:hover { border-color: var(--white); }
-    .footer-list-label { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #444442; margin-bottom: 16px; }
+    
+    /* Inverted CTA Button for Contact Page */
+    .footer-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--white); background: var(--black); padding: 13px 20px;
+      cursor: none; transition: background 0.2s ease;
+    }
+    .footer-cta:hover { background: var(--grey-dark); }
+    .footer-cta .arrow { transition: transform 0.2s ease; }
+    .footer-cta:hover .arrow { transform: translateX(5px); }
+
+    .footer-list-label { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-mid); margin-bottom: 16px; }
     .footer-list { list-style: none; }
-    .footer-list li { font-family: var(--font-mono); font-size: 12px; font-weight: 300; color: #666664; padding: 6px 0; border-bottom: 1px solid #1c1c1a; transition: color 0.2s ease; cursor: none; }
-    .footer-list li:hover { color: var(--white); }
+    .footer-list li { font-family: var(--font-mono); font-size: 12px; font-weight: 300; color: var(--grey-dark); padding: 6px 0; border-bottom: 1px solid var(--grey-light); transition: color 0.2s ease; cursor: none; }
+    .footer-list li:hover { color: var(--black); }
     .footer-bottom { display: flex; justify-content: space-between; align-items: flex-end; padding-top: 20px; }
-    .footer-bottom p { font-family: var(--font-mono); font-size: 11px; font-weight: 300; color: #444442; line-height: 1.7; }
-    .footer-bottom a { color: #444442; border-bottom: 1px solid #444442; transition: color 0.2s, border-color 0.2s; }
-    .footer-bottom a:hover { color: var(--white); border-color: var(--white); }
+    .footer-bottom p { font-family: var(--font-mono); font-size: 11px; font-weight: 300; color: var(--grey-dark); line-height: 1.7; }
+    .footer-bottom a { color: var(--grey-dark); border-bottom: 1px solid var(--grey-mid); transition: color 0.2s, border-color 0.2s; }
+    .footer-bottom a:hover { color: var(--black); border-color: var(--black); }
 
     /* ── Reveal ── */
     .reveal { transition: opacity 0.7s ease, transform 0.7s ease; }
     .reveal:not(.visible) { opacity: 0; transform: translateY(18px); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-stagger > * { transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal-stagger:not(.visible) > * { opacity: 0; transform: translateY(14px); }
+    .reveal-stagger.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0s; }
+    .reveal-stagger.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.1s; }
 
     /* ── Responsive ── */
     @media (max-width: 960px) {
@@ -387,8 +410,9 @@
     @media (max-width: 600px) {
       :root { --head-size: clamp(18px, 6vw, 28px); }
       #hero { grid-template-columns: 1fr; }
-      .hero-col-3 { min-height: 120vw; }
+      .hero-col-3 { min-height: 56vw; position: relative; border-left: none; border-top: 1px solid var(--black); }
       .contact-grid { grid-template-columns: 1fr; }
+      .contact-col { padding: clamp(40px, 6vw, 64px) var(--gutter) !important; }
       .footer-top { grid-template-columns: 1fr; }
     }
   </style>
@@ -407,7 +431,6 @@
         <li><a href="services/seo-geo-copywriting.html">SEO &amp; GEO</a></li>
         <li><a href="services/wordpress-design.html">WordPress</a></li>
         <li><a href="services/shopify-design.html">Shopify</a></li>
-        <li><a href="https://www.11h21.com" target="_blank" rel="noopener">Photography ↗</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
@@ -431,7 +454,6 @@
           <a href="services/seo-geo-copywriting.html" role="menuitem">SEO &amp; GEO Copywriting</a>
           <a href="services/wordpress-design.html" role="menuitem">WordPress Design</a>
           <a href="services/shopify-design.html" role="menuitem">Shopify Design</a>
-          <a href="https://www.11h21.com" target="_blank" rel="noopener" role="menuitem">Photography ↗</a>
         </div>
       </li>
       <li><a href="contact.html">Contact</a></li>
@@ -466,14 +488,19 @@
 
   <span class="row-divider" role="separator" aria-hidden="true"></span>
 
-  <!-- ROW 2 — CONTACT DETAIL -->
-  <section id="contact-detail" aria-labelledby="contact-heading">
-
-    <div class="contact-header">
+  <!-- ROW 2 — CONTACT HEADER -->
+  <section id="contact-header-row" aria-labelledby="contact-heading">
+    <div class="contact-header reveal">
+      <p class="contact-label">Enquiries &amp; Availability</p>
       <h2 id="contact-heading" class="section-head">Get in touch</h2>
     </div>
+  </section>
 
-    <div class="contact-grid">
+  <span class="row-divider" role="separator" aria-hidden="true"></span>
+
+  <!-- ROW 3 — CONTACT COLUMNS -->
+  <section id="contact-grid-row">
+    <div class="contact-grid reveal-stagger">
 
       <!-- Col 1: About -->
       <div class="contact-col">
@@ -486,14 +513,14 @@
           DTP design and social content creation.
         </p>
         <p>
-          I am currently based in The Hague, Netherlands. All work is delivered remotely; communication is
+          I am currently based in The Hague, Netherlands, with South Africa
+          as my next base. All work is delivered remotely; communication is
           direct and personal throughout. No account managers, no discovery
           decks, no unnecessary process.
         </p>
         <p>
           11h21.studio is a sister project of <a href="https://www.11h21.com" target="_blank" rel="noopener">11h21.com</a>,
           the photographic studio and fine art print imprint of Alfred Lor.
-          Visit <a href="https://www.11h21.com" target="_blank" rel="noopener">11h21.com</a> to see the photography work.
         </p>
         <p>
           Email me directly at<br>
@@ -501,10 +528,7 @@
         </p>
       </div>
 
-      <!-- Col 2: intentionally blank -->
-      <div class="contact-col" aria-hidden="true"></div>
-
-      <!-- Col 3: FAQ -->
+      <!-- Col 2: FAQ -->
       <div class="contact-col">
         <h3>Frequently asked</h3>
         <div class="faq-list" role="list">
@@ -529,7 +553,8 @@
             </button>
             <div class="faq-answer">
               Yes. I work with clients everywhere. Delivery is remote first
-              and communication is direct. Currently based in The Hague.
+              and communication is direct. Currently based in The Hague;
+              South Africa next.
             </div>
           </div>
 
@@ -583,7 +608,7 @@
     <div class="footer-top">
       <div>
         <p class="footer-tagline">Available worldwide. Let's talk.</p>
-        <p class="footer-email"><a href="mailto:studio.11h21@gmail.com">studio.11h21@gmail.com</a></p>
+        <a href="mailto:studio.11h21@gmail.com" class="footer-cta">Get in touch <span class="arrow">→</span></a>
       </div>
       <div>
         <p class="footer-list-label">Services</p>
@@ -594,7 +619,6 @@
           <li><a href="services/shopify-design.html">Shopify Design</a></li>
           <li>CMS Migration &amp; Upkeep</li>
           <li>DTP &amp; Social Content</li>
-          <li><a href="https://www.11h21.com" target="_blank" rel="noopener">Photography — 11h21.com ↗</a></li>
         </ul>
       </div>
       <div>
@@ -617,7 +641,6 @@
 
   <script>
     // ── Cursor ──
-    // Initialise offscreen — positions update on first mousemove
     const ring = document.getElementById('cursor-ring');
     const dot  = document.getElementById('cursor-dot');
     let tx = -100, ty = -100, rx = -100, ry = -100;
@@ -625,13 +648,11 @@
 
     document.addEventListener('mousemove', e => {
       tx = e.clientX; ty = e.clientY;
-      // Snap dot immediately
       dot.style.left = tx + 'px';
       dot.style.top  = ty + 'px';
       cursorActive = true;
     });
 
-    // Ring lerps toward cursor position
     (function lerp() {
       if (cursorActive) {
         rx += (tx - rx) * 0.15;
@@ -642,7 +663,6 @@
       requestAnimationFrame(lerp);
     })();
 
-    // Hover expand — attach to interactive elements
     function bindCursorHover() {
       document.querySelectorAll('a, button, .footer-list li, .faq-question').forEach(el => {
         el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
@@ -660,7 +680,7 @@
       mainNav.classList.toggle('past-hero', !entries[0].isIntersecting);
     }, { threshold: 0.05 }).observe(document.getElementById('hero'));
 
-    // ── Services dropdown (chevron only) ──
+    // ── Services dropdown ──
     const dropdownToggle = document.getElementById('dropdownToggle');
     const navDropdown    = document.getElementById('navDropdown');
 
@@ -710,7 +730,7 @@
       });
     });
 
-    // ── Scroll reveal — file:// compatible ──
+    // ── Scroll reveal ──
     function activateReveal(el) { el.classList.add('visible'); }
     const ro = new IntersectionObserver(entries => {
       entries.forEach(e => {
@@ -718,7 +738,7 @@
       });
     }, { threshold: 0.0, rootMargin: '0px 0px -10px 0px' });
 
-    document.querySelectorAll('.reveal').forEach(el => {
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
       const rect = el.getBoundingClientRect();
       if (rect.top < window.innerHeight) { activateReveal(el); }
       else { ro.observe(el); }

@@ -7,7 +7,6 @@
   <meta name="description" content="Web design, SEO and GEO strategy, WordPress builds, Shopify design and HTML development for independent brands and creative businesses. Personal service, direct communication, working worldwide." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://11h21.studio/services.html" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'><rect width='1' height='1' fill='%23fbe74d'/></svg>" />
 
   <meta name="geo.region" content="NL-ZH" />
   <meta name="geo.placename" content="The Hague, Netherlands" />
@@ -138,29 +137,21 @@
       position: fixed; top: 0; left: 0;
       width: 100%; height: var(--nav-h);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 var(--gutter); z-index: 200; background: transparent;
+      padding: 0 var(--gutter); 
+      z-index: 200; 
+      background: var(--white); 
+      border-bottom: 1px solid var(--black); 
     }
-    nav#mainNav::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: var(--nav-h);
-      background: rgba(0, 0, 0, 0.50);
-      transition: height 0.25s ease, background 0.3s ease;
-      z-index: -1; pointer-events: none;
-    }
-    nav#mainNav.dropdown-open::before { height: calc(var(--nav-h) + 180px); }
-    nav#mainNav.past-hero::before { background: rgba(0, 0, 0, 0.72); }
-    nav#mainNav.past-hero.dropdown-open::before { height: calc(var(--nav-h) + 180px); background: rgba(0, 0, 0, 0.85); }
     .nav-logo {
       font-family: var(--font-mono); font-weight: 500;
       font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-      color: #ffffff; mix-blend-mode: difference;
+      color: var(--black);
     }
     .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
     .nav-links a {
       font-family: var(--font-mono); font-weight: 400;
       font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-      color: #ffffff; mix-blend-mode: difference; transition: opacity 0.2s ease;
+      color: var(--black); transition: opacity 0.2s ease;
     }
     .nav-links a:hover { opacity: 0.6; }
     .nav-dropdown { position: relative; }
@@ -168,21 +159,22 @@
     .nav-dropdown-label {
       font-family: var(--font-mono); font-weight: 400;
       font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-      color: #ffffff; mix-blend-mode: difference; transition: opacity 0.2s ease;
+      color: var(--black); transition: opacity 0.2s ease;
     }
     .nav-dropdown-label:hover { opacity: 0.6; }
     .nav-dropdown-chevron {
-      font-family: var(--font-mono); font-size: 13px;
-      color: #ffffff; mix-blend-mode: difference;
+      font-family: var(--font-mono); font-size: 9px;
+      color: var(--black);
       background: none; border: none; cursor: none;
-      padding: 6px 8px; line-height: 1; transition: opacity 0.2s ease;
+      padding: 2px 4px; line-height: 1; transition: opacity 0.2s ease;
     }
     .nav-dropdown-chevron:hover { opacity: 0.6; }
-    .nav-dropdown-toggle .chevron { display: inline-block; transition: transform 0.25s ease; font-size: 13px; line-height: 1; }
+    .nav-dropdown-toggle .chevron { display: inline-block; transition: transform 0.25s ease; font-size: 9px; line-height: 1; }
     .nav-dropdown.open .chevron { transform: rotate(180deg); }
     .nav-dropdown-menu {
-      position: absolute; top: calc(100% + 8px); left: 0;
-      background: transparent; border: none; min-width: 200px;
+      position: absolute; top: calc(100% + 8px); left: -16px;
+      background: var(--white); border: 1px solid var(--black); min-width: 200px;
+      padding: 8px 16px;
       opacity: 0; pointer-events: none; transform: translateY(-6px);
       transition: opacity 0.2s ease, transform 0.2s ease; z-index: 300;
     }
@@ -190,7 +182,7 @@
     .nav-dropdown-menu a {
       display: block; font-family: var(--font-mono); font-size: 11px; font-weight: 300;
       letter-spacing: 0.08em; text-transform: uppercase;
-      color: #ffffff !important; mix-blend-mode: difference;
+      color: var(--black) !important;
       padding: 8px 0; border-bottom: none; transition: opacity 0.15s ease;
     }
     .nav-dropdown-menu a:hover { background: transparent; opacity: 0.6; }
@@ -199,14 +191,15 @@
       cursor: none; padding: 4px; background: none; border: none; z-index: 201;
     }
     .nav-hamburger span {
-      display: block; width: 22px; height: 1px; background: #ffffff;
+      display: block; width: 22px; height: 1px; background: var(--black);
       transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
       transform-origin: center;
     }
+    .nav-hamburger.open span { background: var(--white); }
     .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
     .nav-hamburger.open span:nth-child(2) { opacity: 0; }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-    nav#mainNav.past-hero .nav-hamburger span { background: #ffffff; }
+    
     .menu-overlay {
       position: fixed; inset: 0; background: var(--black); z-index: 190;
       display: flex; align-items: center; justify-content: center;
@@ -243,7 +236,7 @@
     /* ── ROW 1 — HERO (still image) ── */
     #hero {
       min-height: 80vh; display: grid; grid-template-columns: 1fr 1fr 1fr;
-      background: var(--black); overflow: hidden;
+      background: var(--white); overflow: hidden;
     }
     .hero-col-1 {
       display: flex; flex-direction: column; justify-content: flex-end;
@@ -253,15 +246,19 @@
     .hero-text-block h1 {
       display: inline; font-family: var(--font-head); font-size: var(--head-size);
       font-weight: 800; font-stretch: 125%; line-height: var(--head-lh);
-      letter-spacing: -0.02em; color: var(--white);
+      letter-spacing: -0.02em; color: var(--black);
     }
     .hero-text-block .intro-light {
       display: inline; font-family: var(--font-head); font-size: var(--head-size);
       font-weight: 300; font-stretch: 125%; line-height: var(--head-lh);
-      letter-spacing: -0.02em; color: var(--white);
+      letter-spacing: -0.02em; color: var(--black);
     }
     .hero-col-2 { position: relative; z-index: 2; }
-    .hero-col-3 { position: relative; overflow: hidden; min-height: 40vh; background: #1a1a18; }
+    .hero-col-3 { 
+      position: relative; overflow: hidden; 
+      min-height: 40vh; 
+      border-left: 1px solid var(--black);
+    }
     .hero-col-3 img {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       object-fit: cover; object-position: center top;
@@ -272,27 +269,41 @@
     }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-    /* ── ROW 2 — SERVICES (4 columns) ── */
-    #services {
+    /* ── ROW 2 — SERVICES HEADER ── */
+    #service-header-row {
       background: var(--white);
-      padding: clamp(40px, 5vw, 72px) var(--gutter);
+      padding: clamp(60px, 8vw, 100px) var(--gutter);
     }
-    .services-header { margin-bottom: clamp(16px, 2.5vw, 28px); }
+    .service-header { margin-bottom: 0; }
+    .service-label {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-mid); margin-bottom: 12px;
+    }
 
+    /* ── ROW 3 — SERVICES GRID (4 columns) ── */
+    #service-grid-row {
+      background: var(--black);
+    }
     .services-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: var(--col-gap);
-      align-items: start;
+      gap: 1px;
+      align-items: stretch;
     }
 
     .service-card {
+      background: var(--white);
+      padding: clamp(48px, 5vw, 80px) clamp(32px, 4vw, 56px);
       display: flex; flex-direction: column;
     }
+    
+    .service-card:nth-child(1) { padding-left: var(--gutter); }
+    .service-card:nth-child(4) { padding-right: var(--gutter); }
+
     .service-card h3 {
       font-family: var(--font-mono); font-size: 13px; font-weight: 500;
       letter-spacing: 0.1em; text-transform: uppercase; color: var(--black);
-      margin-bottom: 14px; padding-bottom: 0;
+      margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--grey-light);
     }
     .service-card p {
       font-family: var(--font-mono); font-size: 12px; font-weight: 300;
@@ -304,15 +315,14 @@
       font-family: var(--font-mono); font-size: 10px; font-weight: 500;
       letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--black); border-bottom: none;
-      padding-bottom: 0;
+      padding-bottom: 0; margin-top: auto;
       transition: opacity 0.2s ease;
-      margin-top: auto;
     }
     .service-card .service-link:hover { opacity: 0.6; }
     .service-card .service-link .arrow { transition: transform 0.2s ease; }
     .service-card:hover .service-link .arrow { transform: translateX(4px); }
 
-    /* ── ROW 3 — THREE IMAGES ── */
+    /* ── ROW 4 — THREE IMAGES ── */
     #services-images {
       display: grid; grid-template-columns: repeat(3, 1fr);
       background: var(--black);
@@ -333,45 +343,60 @@
     }
 
     /* ── FOOTER ── */
-    #footer { background: var(--black); color: var(--white); padding: clamp(40px, 6vw, 80px) var(--gutter) clamp(28px, 3vw, 40px); }
+    #footer { 
+      background: var(--white); 
+      color: var(--black); 
+      padding: clamp(40px, 6vw, 80px) var(--gutter) clamp(28px, 3vw, 40px); 
+    }
     .footer-top {
       display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--col-gap);
-      padding-bottom: clamp(32px, 5vw, 64px); border-bottom: 1px solid #252522; align-items: start;
+      padding-bottom: clamp(32px, 5vw, 64px); border-bottom: 1px solid var(--black); align-items: start;
     }
     .footer-tagline {
       font-family: var(--font-head); font-size: clamp(18px, 2.2vw, 28px);
       font-weight: 800; font-stretch: 125%; letter-spacing: -0.02em;
-      color: var(--white); line-height: 1.2; margin-bottom: 28px;
+      color: var(--black); line-height: 1.2; margin-bottom: 28px;
     }
     .footer-cta {
       display: inline-flex; align-items: center; gap: 10px;
       font-family: var(--font-mono); font-size: 11px; font-weight: 500;
       letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--black); background: var(--white); padding: 13px 20px;
+      color: var(--white); background: var(--black); padding: 13px 20px;
       cursor: none; transition: background 0.2s ease;
     }
-    .footer-cta:hover { background: var(--grey-light); }
+    .footer-cta:hover { background: var(--grey-dark); }
     .footer-cta .arrow { transition: transform 0.2s ease; }
     .footer-cta:hover .arrow { transform: translateX(5px); }
-    .footer-list-label { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #444442; margin-bottom: 16px; }
+    
+    .footer-list-label { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-mid); margin-bottom: 16px; }
     .footer-list { list-style: none; }
-    .footer-list li { font-family: var(--font-mono); font-size: 12px; font-weight: 300; color: #666664; padding: 6px 0; border-bottom: 1px solid #1c1c1a; transition: color 0.2s ease; cursor: none; }
-    .footer-list li:hover { color: var(--white); }
+    .footer-list li { font-family: var(--font-mono); font-size: 12px; font-weight: 300; color: var(--grey-dark); padding: 6px 0; border-bottom: 1px solid var(--grey-light); transition: color 0.2s ease; cursor: none; }
+    .footer-list li:hover { color: var(--black); }
     .footer-bottom { display: flex; justify-content: space-between; align-items: flex-end; padding-top: 20px; }
-    .footer-bottom p { font-family: var(--font-mono); font-size: 11px; font-weight: 300; color: #444442; line-height: 1.7; }
-    .footer-bottom a { color: #444442; border-bottom: 1px solid #444442; transition: color 0.2s, border-color 0.2s; }
-    .footer-bottom a:hover { color: var(--white); border-color: var(--white); }
+    .footer-bottom p { font-family: var(--font-mono); font-size: 11px; font-weight: 300; color: var(--grey-dark); line-height: 1.7; }
+    .footer-bottom a { color: var(--grey-dark); border-bottom: 1px solid var(--grey-mid); transition: color 0.2s, border-color 0.2s; }
+    .footer-bottom a:hover { color: var(--black); border-color: var(--black); }
 
     /* ── Reveal ── */
     .reveal { transition: opacity 0.7s ease, transform 0.7s ease; }
     .reveal:not(.visible) { opacity: 0; transform: translateY(18px); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-stagger > * { transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal-stagger:not(.visible) > * { opacity: 0; transform: translateY(14px); }
+    .reveal-stagger.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0s; }
+    .reveal-stagger.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.1s; }
+    .reveal-stagger.visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.2s; }
+    .reveal-stagger.visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.3s; }
 
     /* ── Responsive ── */
     @media (max-width: 960px) {
       #hero { grid-template-columns: 1fr 1fr; }
       .hero-col-2 { display: none; }
+      
       .services-grid { grid-template-columns: 1fr 1fr; }
+      .service-card:nth-child(1), .service-card:nth-child(3) { padding-left: var(--gutter); }
+      .service-card:nth-child(2), .service-card:nth-child(4) { padding-right: var(--gutter); }
+      
       .footer-top { grid-template-columns: 1fr 1fr; }
       #services-images { grid-template-columns: 1fr 1fr; }
       .services-img-col:last-child { display: none; }
@@ -379,8 +404,11 @@
     @media (max-width: 600px) {
       :root { --head-size: clamp(18px, 6vw, 28px); }
       #hero { grid-template-columns: 1fr; }
-      .hero-col-3 { min-height: 120vw; }
+      .hero-col-3 { min-height: 56vw; position: relative; border-left: none; border-top: 1px solid var(--black); }
+      
       .services-grid { grid-template-columns: 1fr; }
+      .service-card { padding: clamp(40px, 6vw, 64px) var(--gutter) !important; }
+      
       .footer-top { grid-template-columns: 1fr; }
       #services-images { grid-template-columns: 1fr; }
       .services-img-col:not(:first-child) { display: none; }
@@ -400,7 +428,6 @@
         <li><a href="services/seo-geo-copywriting.html">SEO &amp; GEO</a></li>
         <li><a href="services/wordpress-design.html">WordPress</a></li>
         <li><a href="services/shopify-design.html">Shopify</a></li>
-        <li><a href="https://www.11h21.com" target="_blank" rel="noopener">Photography ↗</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
@@ -423,7 +450,6 @@
           <a href="services/seo-geo-copywriting.html" role="menuitem">SEO &amp; GEO Copywriting</a>
           <a href="services/wordpress-design.html" role="menuitem">WordPress Design</a>
           <a href="services/shopify-design.html" role="menuitem">Shopify Design</a>
-          <a href="https://www.11h21.com" target="_blank" rel="noopener" role="menuitem">Photography ↗</a>
         </div>
       </li>
       <li><a href="contact.html">Contact</a></li>
@@ -460,16 +486,21 @@
 
   <span class="row-divider" role="separator" aria-hidden="true"></span>
 
-  <!-- ROW 2 — SERVICES (4 columns) -->
-  <section id="services" aria-labelledby="services-heading">
-
-    <div class="services-header reveal">
+  <!-- ROW 2 — SERVICES HEADER -->
+  <section id="service-header-row" aria-labelledby="services-heading">
+    <div class="service-header reveal">
+      <p class="service-label">Studio Capabilities</p>
       <h2 id="services-heading" class="section-head">Services</h2>
     </div>
+  </section>
 
-    <div class="services-grid">
+  <span class="row-divider" role="separator" aria-hidden="true"></span>
 
-      <div class="service-card reveal">
+  <!-- ROW 3 — SERVICES GRID (4 columns) -->
+  <section id="service-grid-row">
+    <div class="services-grid reveal-stagger">
+
+      <div class="service-card">
         <h3>HTML Web Design</h3>
         <p>
           Fast, lightweight, hand-coded websites for independent bars,
@@ -489,7 +520,7 @@
         </a>
       </div>
 
-      <div class="service-card reveal">
+      <div class="service-card">
         <h3>SEO &amp; GEO Copywriting</h3>
         <p>
           Strategy-led SEO and AI-era GEO content for complex, technical
@@ -509,7 +540,7 @@
         </a>
       </div>
 
-      <div class="service-card reveal">
+      <div class="service-card">
         <h3>WordPress Design</h3>
         <p>
           WordPress website design for architects, studios, professional
@@ -529,7 +560,7 @@
         </a>
       </div>
 
-      <div class="service-card reveal">
+      <div class="service-card">
         <h3>Shopify Design</h3>
         <p>
           Bespoke Shopify builds for photographers, artists, designers
@@ -554,7 +585,7 @@
 
   <span class="row-divider" role="separator" aria-hidden="true"></span>
 
-  <!-- ROW 3 — THREE IMAGES -->
+  <!-- ROW 4 — THREE IMAGES -->
   <section id="services-images" aria-label="Project images">
     <!--
       Three portrait images representing the range of work.
@@ -612,7 +643,6 @@
           <li><a href="services/shopify-design.html">Shopify Design</a></li>
           <li>CMS Migration &amp; Upkeep</li>
           <li>DTP &amp; Social Content</li>
-          <li><a href="https://www.11h21.com" target="_blank" rel="noopener">Photography — 11h21.com ↗</a></li>
         </ul>
       </div>
       <div>
@@ -700,7 +730,7 @@
     const ro = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { activateReveal(e.target); ro.unobserve(e.target); } });
     }, { threshold: 0.0, rootMargin: '0px 0px -10px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => {
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
       const rect = el.getBoundingClientRect();
       if (rect.top < window.innerHeight) { activateReveal(el); } else { ro.observe(el); }
     });
