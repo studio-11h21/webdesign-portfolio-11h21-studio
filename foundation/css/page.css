@@ -1,0 +1,98 @@
+/* The Foundation — text pages.
+   Reusable for About, Team, Events and anything else that is mostly words.
+   Loaded after site.css. */
+
+/* ── the prose column ──────────────────────────────────────────────────── */
+.prose {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: var(--text-size);
+  line-height: 1.9;
+  color: var(--ink);
+  padding: 0 10%;
+  margin-bottom: var(--section-gap);
+}
+
+.prose h2 {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: var(--text-size);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.9;
+  opacity: 0.5;
+  margin: 3.5rem 0 0.75rem;
+}
+.prose h2:first-child { margin-top: 0; }
+
+.prose p { margin: 0 0 1.6em; }
+
+/* A pulled-out line inside the prose, for a sentence that carries a
+   section. Same treatment as .page-lede at the top of the page — keep
+   them in step if either changes. */
+.prose .lede {
+  font-family: 'Cormorant Garamond', Garamond, Georgia, serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  margin: 0 0 2.5rem;
+}
+
+.prose figure { margin: 2.75rem 0; }
+.prose figure img { width: 100%; height: auto; display: block; }
+.prose figcaption {
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.45;
+  margin-top: 0.75rem;
+}
+
+/* a plain dated list — Team and Events will want this */
+.facts {
+  border-top: 1px solid rgba(17, 17, 17, 0.18);
+  margin: 2.5rem 0 0;
+}
+.facts div {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: space-between;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.18);
+}
+.facts dt {
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  flex: none;
+}
+.facts dd { margin: 0; text-align: right; }
+
+/* ── MOBILE ────────────────────────────────────────────────────────────
+   The shared footer carries a negative top margin that exists to cancel
+   the home page's lifted menu row. There is no menu row on a text page,
+   so that pull was dragging the footer 21vh up into the end of the prose.
+   Add `border-top: 1px solid rgba(17,17,17,0.18);` here if this page
+   should have the same hairline the tenants page has above its footer. */
+@media (max-width: 1023px) {
+  .site-footer { margin-top: 0; }
+}
+
+/* ── DESKTOP ───────────────────────────────────────────────────────────── */
+@media (min-width: 1024px) {
+  /* The prose fills the content column, exactly as the tenant grid and
+     the home page gallery do — same left edge, same right edge, and the
+     figures scale to the column instead of stopping at a fixed 34rem and
+     leaving the right-hand side of the page empty.
+
+     Trade-off worth knowing: at 1920 the column is 768px, which at this
+     type size runs to a long line. If it reads too wide, put a cap back
+     with `max-width: 34rem; margin-inline: auto;` — that centres it in
+     the column rather than floating it left. */
+  .prose {
+    padding: 0;
+    max-width: none;
+  }
+  .prose .lede { font-size: 1.75rem; }
+}

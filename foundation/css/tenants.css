@@ -1,0 +1,278 @@
+/* The Foundation — tenants page.
+   Loaded after site.css, so it inherits the whole framework: the rail, the
+   divider, the content column, the footer. Only the grid, the filter bar and
+   the detail panel are new.
+
+   url() paths here resolve against THIS file, so they start ../
+*/
+
+/* ── filter bar ────────────────────────────────────────────────────────── */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  padding: 0 10%;
+  margin-bottom: 0.75rem;
+}
+.filter {
+  font: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  padding: 0.34rem 0.9rem;
+  border: 1px solid var(--rule, rgba(17, 17, 17, 0.28));
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  opacity: 0.62;
+  cursor: pointer;
+  transition: opacity 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+.filter:hover { opacity: 1; }
+.filter.is-on {
+  opacity: 1;
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.tenant-count {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 0 10%;
+  /* short text in a centring flex column would be centred as a flex item
+     regardless of text-align — see the note on .page-lede in site.css */
+  width: 100%;
+  color: var(--ink);
+  opacity: 0.45;
+  margin-bottom: 2rem;
+}
+
+/* ── the grid ──────────────────────────────────────────────────────────── */
+.tenant-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* a hairline lattice, drawn by the gap showing the ink through */
+  gap: 1px;
+  background: rgba(17, 17, 17, 0.16);
+  border-block: 1px solid rgba(17, 17, 17, 0.16);
+  margin-bottom: var(--section-gap);
+}
+
+.tile { background: var(--paper); }
+.tile[hidden] { display: none; }
+
+.tile__hit {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+}
+.tile__hit:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; }
+
+/* Square frame, artwork centred with air around it. Logos and cut-out
+   photos both sit on the paper, which is what stops a grid of mixed
+   artwork looking broken. */
+.tile__frame {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 1;
+  padding: 14%;
+  overflow: hidden;
+}
+.tile__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: scale 0.5s var(--ease, cubic-bezier(.2,.8,.2,1));
+}
+.tile__hit:hover .tile__frame img { scale: 1.06; }
+
+.tile__cat {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.7rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.4;
+}
+.tile__name {
+  display: block;
+  font-family: 'Cormorant Garamond', Garamond, Georgia, serif;
+  font-size: 1rem;
+  padding: 0 0.9rem 0.9rem;
+}
+
+/* ── the detail panel: full-bleed, in from the right ───────────────────── */
+.panel-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(28, 24, 21, 0.34);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.panel-scrim[hidden] { display: none; }
+body.panel-open .panel-scrim { opacity: 1; }
+
+.tenant-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(560px, 100%);
+  z-index: 41;
+  background: var(--paper);
+  border-left: 1px solid var(--ink);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  translate: 100% 0;
+  transition: translate 0.5s cubic-bezier(.22,.85,.24,1);
+}
+.tenant-panel[hidden] { display: none; }
+body.panel-open .tenant-panel { translate: 0 0; }
+
+.panel__close {
+  position: sticky;
+  top: 0;
+  margin-left: auto;
+  display: block;
+  background: var(--paper);
+  border: 0;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--ink);
+  padding: 1.1rem 1.3rem;
+  cursor: pointer;
+  z-index: 2;
+  transition: rotate 0.3s ease;
+}
+.panel__close:hover { rotate: 90deg; }
+
+.panel__inner {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: var(--text-size);
+  line-height: 1.9;
+  color: var(--ink);
+  /* no bottom padding: the photographs are the last thing in the panel and
+     they run to its bottom edge. The gap when a tenant has one photo (or
+     none) is the margin on .panel__links below. */
+  padding: 0 2rem 0;
+  margin-top: -1rem;
+}
+
+.panel__cat {
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+.panel__name {
+  font-family: 'Cormorant Garamond', Garamond, Georgia, serif;
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 1.1;
+  margin: 0.35rem 0 0.2rem;
+}
+.panel__unit {
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  display: block;
+  margin-bottom: 1.6rem;
+}
+.panel__blurb { margin: 0 0 1.8rem; }
+
+/* The links come BEFORE the photographs in the markup now, so the visitor
+   has the website and the socials in front of them without scrolling
+   through the gallery first. */
+.panel__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.4rem;
+  align-items: baseline;
+  /* no rule above them any more — the blurb's own margin is the gap */
+  padding-top: 0;
+  margin-bottom: 2.2rem;
+}
+
+/* Photos run edge to edge — the reason for the full-bleed panel — and
+   finish flush with the bottom of the panel. A tenant with one landscape
+   photo therefore leaves paper below it; a tenant with three fills the
+   panel and scrolls. */
+.panel__shots {
+  display: grid;
+  gap: 1px;
+  margin: 0 -2rem;
+  background: rgba(17, 17, 17, 0.16);
+}
+.panel__shots:empty { display: none; }
+.panel__shots img { width: 100%; height: auto; display: block; }
+/* Every link in the panel is set the same way — the website link used to
+   be Cormorant at 0.95rem, which read as a different kind of thing to the
+   socials sitting beside it. It keeps full opacity so it still leads. */
+.panel__site,
+.panel__socials a {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.panel__site { opacity: 1; }
+.panel__socials { display: flex; gap: 1rem; }
+.panel__socials a { opacity: 0.6; }
+.panel__socials a:hover { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tenant-panel { transition-duration: 0.001ms; }
+  .panel-scrim { transition-duration: 0.001ms; }
+}
+
+/* ── MOBILE: close the page off before the footer ──────────────────────
+   A hairline in the same tone as the grid's lattice, so the body content
+   and the footer read as two separate things. Desktop already has the
+   footer's own black rule, so this is phone-only.
+
+   The `margin-top: 0` matters: the shared footer carries a negative top
+   margin that exists to cancel the home page's lifted menu row. There is
+   no menu row on this page, so that pull was dragging the footer 21vh up
+   into the grid — which is also why a rule drawn on it would have landed
+   in the middle of the content. */
+@media (max-width: 1023px) {
+  .site-footer {
+    margin-top: 0;
+    border-top: 1px solid rgba(17, 17, 17, 0.16);
+  }
+}
+
+/* ── DESKTOP: everything sits in the content column ────────────────────── */
+@media (min-width: 1024px) {
+  /* the intro moves into the rail, like the shaped text does on the home
+     page, and gets the same left alignment */
+  .filters {
+    justify-content: flex-start;
+    padding: 0;
+    margin-bottom: 0.75rem;
+  }
+  .tenant-count { text-align: left; padding: 0; margin-bottom: 2.5rem; }
+
+  /* two-up still: the column is half the window, and four across would
+     render the artwork at thumbnail size */
+  .tenant-grid { grid-template-columns: repeat(2, 1fr); }
+  .tile__name { font-size: 1.12rem; }
+}

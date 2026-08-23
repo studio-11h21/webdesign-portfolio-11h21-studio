@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- CLIENT PREVIEW ONLY — REMOVE BEFORE LAUNCH.
+       Keeps this copy out of Google so it never competes with the
+       real site, or with 11h21.studio itself. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <title>The Foundation — Knysna</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+
+  <!-- SHOW THE SPLASH ONCE PER VISIT.
+       Inline and in the <head> on purpose: the class has to be on <html>
+       before the first paint, or the town screen flashes up and vanishes.
+
+       sessionStorage, not localStorage — the memory lasts as long as the
+       tab is open. Close it or open a new one and the splash is back,
+       which is the right behaviour for a landing screen.
+
+       Add ?splash to the address to force it, which is the easy way to
+       demo the opening without hunting through browser settings.
+
+       try/catch because private browsing can make sessionStorage throw on
+       access; if it does, the splash simply shows every time. -->
+  <script>
+    (function () {
+      var KEY = 'foundation-splash-seen';
+      try {
+        if (location.search.indexOf('splash') > -1) {
+          sessionStorage.removeItem(KEY);
+        } else if (sessionStorage.getItem(KEY)) {
+          document.documentElement.classList.add('splash-seen');
+        }
+        sessionStorage.setItem(KEY, '1');
+      } catch (e) { /* no storage — always show it */ }
+    })();
+  </script>
+</head>
+
+<body>
+  <!-- 1. INTRO TOWN SCROLL -->
+  <div class="scroll-container" id="scroll-container">
+    <div class="sticky-wrapper" id="sticky-wrapper">
+
+      <!-- Mobile Top Image -->
+      <img
+        src="images/hero/town-top-mobile.png"
+        alt="Knysna Town Top Mobile"
+        id="mob-top-image"
+        class="scroll-img mobile-img"
+      />
+      <!-- Desktop Top Image -->
+      <img
+        src="images/hero/town-top-desktop.png"
+        alt="Knysna Town Top Ibis Desktop"
+        id="desk-top-image"
+        class="scroll-img desktop-img"
+      />
+      <!-- INTRO TITLE PLACED UNDERNEATH TOP IMAGES -->
+      <h1 id="intro-title" class="brand-heading-font">The Foundation</h1>
+      <!-- Mobile Bottom Image -->
+      <img
+        src="images/hero/town-bottom-mobile.png"
+        alt="Knysna Town Bottom Mobile"
+        id="mob-btm-image"
+        class="scroll-img mobile-img"
+      />
+      <!-- Desktop Bottom Image -->
+      <img
+        src="images/hero/town-bottom-desktop.jpg"
+        alt="Knysna Town Bottom Desktop"
+        id="desk-btm-image"
+        class="scroll-img desktop-img"
+      />
+    </div>
+  </div>
+  <!-- Desktop only: the hairline between the static column and the content
+       column. A separate element rather than part of .rail, because the rail
+       gets pushed up by the footer and the line must not travel with it. -->
+  <div class="rail-divide" aria-hidden="true"></div>
+
+  <!-- LOGO + MENU. Outside .content-section deliberately: that section is
+       a stacking context, and the phone's full-screen menu could never
+       rise above the splash screen from inside it.
+       On mobile .rail is `display: contents` and the logo is hidden, so
+       all that remains of this block is the overlay. -->
+  <div class="rail" id="rail">
+    <img
+      src="images/hero/foundation-stamp-desktop.png"
+      alt="The Foundation, Knysna"
+      class="stamp-logo"
+    />
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="tenants.html">Tenants</a>
+      <a href="about.html">Our Story</a>
+      <a href="team.html">Our Team</a>
+      <a href="events.html">Events</a>
+    </nav>
+  </div>
+
+  <!-- Phone only: opens the menu above. Paper-filled so it reads over the
+       dark cloud at the top of info-top.png. -->
+  <button class="burger" id="burger" type="button" aria-label="Menu"
+          aria-expanded="false" aria-controls="site-nav">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- 2. FOUNDATION CONTENT SECTION -->
+  <div class="content-section">
+
+    <!-- Hero Top Area with Info Top Image and Background Ibises -->
+    <div class="hero-top-area">
+      <div class="ibis-container">
+        <img src="images/decor/ibis-1.png" alt="" class="ibis ibis-1" />
+        <img src="images/decor/ibis-2.png" alt="" class="ibis ibis-2" />
+      </div>
+      <img
+        src="images/hero/info-top.png"
+        alt="Knysna Info Top"
+        id="info-top-image"
+      />
+    </div>
+    <!-- Building Photo -->
+    <img
+      src="images/hero/building-photo.png"
+      alt="The Foundation Building Photo"
+      id="foundation-building-photo"
+    />
+    <!-- THE LEDE. Outside the rail, so it is the first thing in the main
+         column on desktop and sits directly under the building photograph
+         on a phone. Every page opens this way. -->
+    <div class="page-lede">
+      The Foundation<br>
+      Is a Space of Creativity<br>
+      And more words here for client<br>
+      To decide what they would like to say<br>
+      But must try to keep this shape for the words
+    </div>
+    <!-- STACKED 2:3 RATIO PHOTOS -->
+    <div class="stacked-photos-container">
+      <img src="images/gallery/the-foundation-knysna-coffee.jpg" alt="Coffee at The Foundation" class="stacked-img photo-1" />
+      <img src="images/gallery/the-foundation-knysna-shop.jpg" alt="Shop at The Foundation" class="stacked-img photo-2" />
+      <img src="images/gallery/the-foundation-knysna-pancakes.jpg" alt="Pancakes at The Foundation" class="stacked-img photo-3" />
+      <img src="images/gallery/the-foundation-knysna-yoga.jpg" alt="Yoga at The Foundation" class="stacked-img photo-4" />
+    </div>
+    <!-- INTERACTIVE COPY SECTION (Draggable overlays over text) -->
+    <div class="interactive-copy-section">
+
+      <div class="interactive-copy-container">
+        <h2 class="copy-heading">The Heading</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio.</p>
+        <br>
+        <p>Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit.</p>
+      </div>
+      <!-- Draggable Image Links -->
+      <a href="page-1.html" class="draggable-wrapper drag-elephant" data-x="0" data-y="0">
+        <img src="images/decor/elephant.png" alt="Elephant" />
+      </a>
+
+      <a href="page-2.html" class="draggable-wrapper drag-seahorse" data-x="0" data-y="0">
+        <img src="images/decor/seahorse.png" alt="Seahorse" />
+      </a>
+
+      <a href="page-3.html" class="draggable-wrapper drag-butterfly" data-x="0" data-y="0">
+        <img src="images/decor/butterfly.png" alt="Butterfly" />
+      </a>
+    </div>
+
+  </div>
+  <!-- 3. HORIZONTAL SCROLL SECTION -->
+  <div class="hz-scroll-section" id="hz-scroll-section">
+    <div class="hz-sticky-wrapper">
+      <div class="hz-content" id="hz-content">
+
+        <a href="about.html" class="hz-item">
+          <img src="images/menu/the-foundation-knysna-about.jpg" alt="About The Foundation, Knysna">
+          <div class="hz-overlay brand-heading-font">About Us</div>
+        </a>
+
+        <a href="team.html" class="hz-item">
+          <img src="images/menu/the-foundation-knysna-team.jpg" alt="The team at The Foundation, Knysna">
+          <div class="hz-overlay brand-heading-font">Our Team</div>
+        </a>
+
+        <a href="events.html" class="hz-item">
+          <img src="images/menu/the-foundation-knysna-events.jpg" alt="Events at The Foundation, Knysna">
+          <div class="hz-overlay brand-heading-font">Events</div>
+        </a>
+
+        <a href="tenants.html" class="hz-item">
+          <img src="images/menu/the-foundation-knysna-tenants.jpg" alt="Tenants at The Foundation, Knysna">
+          <div class="hz-overlay brand-heading-font">Tenants</div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- 4. FOOTER SECTION -->
+  <footer class="site-footer">
+    <!-- Footer Top Image, with the ibises crossing over its top edge -->
+    <div class="footer-top-area">
+      <div class="ibis-container ibis-container--footer">
+        <img src="images/decor/ibis-1.png" alt="" class="ibis ibis-1" />
+        <img src="images/decor/ibis-2.png" alt="" class="ibis ibis-2" />
+      </div>
+      <img src="images/footer/sketch.png" alt="Footer Top Graphic" class="footer-top-img" />
+    </div>
+    <!-- Footer Copy with requested gaps -->
+    <div class="footer-text-block">
+      <p>The Foundation, 21 Main Road, Knysna, 6540</p>
+      <div class="footer-gap"></div>
+      <p>+27 123 4567 21</p>
+      <div class="footer-gap"></div>
+      <p>Mon - Fri: 9AM - 5PM<br>Sat: 10AM - 3PM</p>
+    </div>
+    <!-- Footer Bottom Image spanning full width at the bottom.
+         <picture> swaps the file at the breakpoint: the coast photo on
+         phones, the wide texture on desktop. One element, no duplicate
+         markup, and the browser only downloads the one it uses. -->
+    <picture>
+      <source media="(min-width: 1024px)" srcset="images/footer/background-desktop.jpg">
+      <img src="images/footer/coast.jpg" alt="" class="footer-bottom-img" />
+    </picture>
+  </footer>
+  <script src="js/site.js"></script>
+</body>
+</html>
