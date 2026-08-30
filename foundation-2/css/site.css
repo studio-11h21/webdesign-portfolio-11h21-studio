@@ -1,0 +1,1212 @@
+/* The Foundation — shared framework stylesheet, linked by every page.
+   Page-specific rules go in that page's own <style> block, after this file.
+
+   CAREFUL: any url() added here resolves against THIS file, not the page,
+   so image paths must start ../  e.g. url('../images/footer/x.jpg')
+*/
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* --- TOKENS -------------------------------------------------------
+       Three numbers run the whole page. Change them here, nowhere else. */
+    :root {
+      /* Standard paragraph size. Intro copy, main copy, H2/H3 and the footer
+         all read from this, so they can never drift apart again.
+         Was 0.95rem on the main copy; if the client wants it back, change
+         this one value. */
+      --text-size: 0.8rem;
+
+      /* The single rhythm between big sections: gallery -> text -> menu ->
+         footer. Roughly 118px on a 390x844 phone, and it scales with the
+         viewport the same way the sticky menu gap does. */
+      --section-gap: 14vh;
+
+      /* Two inks, and that is the whole palette. */
+      --ink: #111;
+      --paper: #fce9ce;
+    }
+
+    body {
+      background-color: var(--paper);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+    }
+    /* --- SHARED FONT CLASS ---
+       H1 and the menu buttons only. Everything else is Inter. */
+    .brand-heading-font {
+      font-family: 'Cormorant Garamond', Garamond, Georgia, serif;
+      font-weight: 500;
+    }
+    /* --- SHOWING THE SPLASH ONCE PER VISIT — CURRENTLY OFF -----------
+       These two rules are DORMANT. They only do anything when the inline
+       script in index.html's <head> puts `splash-seen` on <html>, and
+       that script is switched off (REMEMBER_SPLASH = false), so the town
+       screen currently sits at the top of the home page always and can be
+       scrolled back up to. Flip the switch in index.html to re-enable;
+       nothing here needs changing.
+
+       What they do when it is on: coming Home from the menu lands
+       directly on the content, skipping the town screen.
+
+       Removing the 150vh container outright — rather than scrolling past
+       it — means there is no jump and no flash of a screen the visitor is
+       not meant to see. The negative margin that pulls the content up
+       under the splash has to go with it.
+
+       The class only ever lands on index.html; these two rules are inert
+       everywhere else. */
+    html.splash-seen .scroll-container { display: none; }
+    html.splash-seen .content-section { margin-top: 0; }
+
+    /* --- TOWN SCROLL SECTION --- */
+    .scroll-container {
+      height: 150vh;
+      position: relative;
+      z-index: 10;
+      /* Nothing inside the splash is clickable, and it sits over the top
+         100vh of the content section (which is pulled up by -100vh) and
+         over the sticky button as it fades in. Without this it swallows
+         every click in that overlap. */
+      pointer-events: none;
+    }
+    .sticky-wrapper {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      will-change: opacity;
+      background-color: #fce9ce;
+    }
+    .scroll-img {
+      width: 100%;
+      height: auto;
+      position: absolute;
+      left: 0;
+      will-change: transform;
+    }
+    #desk-top-image {
+      top: 0;
+      transform-origin: top center;
+      z-index: 2;
+    }
+
+    /* ── THE MOBILE SKY: A MOON AND THREE DRIFTING CLOUDS ─────────────
+       The band the sky occupies. `overflow: hidden` is what lets the
+       clouds enter and leave — they are always crossing, and this clips
+       them at the edges so you only ever see the crossing.            */
+    .mob-sky {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      /* Deep enough to reach down to the town at the foot of the screen.
+         At 54% the sky stopped 276px short of the landscape and the gap
+         between the two read as a hole. This runs the sky down to just
+         above the town's top edge, which is also what pulls the moon
+         (centred in this band) lower down the frame. */
+      height: 70%;
+      overflow: hidden;
+      z-index: 2;
+      /* The scroll zoom, driven by --sky-zoom which site.js sets on this
+         element. It is a CUSTOM PROPERTY rather than an inline style so
+         that desktop can opt out of the zoom entirely — an inline style
+         would beat any rule the desktop block could write.
+
+         Scaling the band rather than the pieces keeps the moon and clouds
+         locked together as one sky. */
+      scale: var(--sky-zoom, 1);
+      will-change: scale;
+    }
+
+    /* Static, dead centre of the band. `translate` does the centring so
+       that site.js can set `scale` on scroll without the two fighting —
+       they are separate properties, not one `transform`. */
+    .sky-moon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: -50% -50%;
+      width: 34vw;
+      max-width: 190px;
+      height: auto;
+      /* lowest in the sky — every cloud passes in front of it */
+      z-index: 1;
+    }
+
+    /* Each cloud crosses the full width: it begins with its right edge
+       off the left of the screen (-100% of its own width) and ends with
+       its left edge off the right (100vw). */
+    .sky-cloud {
+      position: absolute;
+      left: 0;
+      height: auto;
+      will-change: translate;
+      animation-name: cloudDrift;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+    @keyframes cloudDrift {
+      from { translate: -100% 0; }
+      to   { translate: 100vw 0; }
+    }
+
+    /* Three clouds, three heights, three sizes, three speeds — far
+       slower than the ibises (12s and 16s), so this reads as weather
+       rather than as traffic.
+
+       The NEGATIVE delays matter: they start each cloud part-way through
+       its crossing, so the sky is already populated on load instead of
+       empty for the first minute. Change a delay to re-stage the opening
+       view without touching the speeds.
+
+       All three sit ABOVE the moon (z 2, 3, 4 against its 1), so every
+       cloud passes in front of it.
+
+       Widths are half again what they were. The heights are staged
+       against the moon, which sits centred in the band: cloud-1 crosses
+       its top, cloud-3 crosses its middle, and cloud-2 is the low one
+       filling the space between the moon and the town below. The delays
+       put all three near the moon on load rather than parked in empty
+       sky — change a delay to re-stage the opening view without touching
+       the speeds. */
+    /* cloud-4 rides right at the top of the frame, filling the empty sky
+       above cloud-1. It overlaps cloud-1's upper edge rather than sitting
+       in a clear lane of its own, which is what stops the four reading as
+       four stripes. */
+    .cloud-4 { top:  1%; width: 68vw; z-index: 2; animation-duration: 110s; animation-delay: -60s; }
+    .cloud-1 { top: 14%; width: 93vw; z-index: 3; animation-duration:  95s; animation-delay: -42s; }
+    .cloud-2 { top: 62%; width: 72vw; z-index: 4; animation-duration: 130s; animation-delay: -66s; }
+    /* -50s, not -41s: at -41s this cloud sat squarely on the moon and hid
+       it on arrival. Offset so it crosses the moon's right side and the
+       moon still reads on load. */
+    .cloud-3 { top: 38%; width: 57vw; z-index: 2; animation-duration:  74s; animation-delay: -50s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sky-cloud { animation-play-state: paused; }
+    }
+    #mob-btm-image, #desk-btm-image {
+      bottom: 0;
+      transform-origin: bottom center;
+      z-index: 1;
+    }
+    #intro-title {
+      position: absolute;
+      z-index: 3;
+      color: #111;
+      text-align: center;
+      width: 100%;
+      pointer-events: none;
+      will-change: opacity;
+      transition: top 0.2s, bottom 0.2s, transform 0.2s;
+    }
+    /* --- MOBILE VIEW (Default) --- */
+    .mobile-img {
+      display: block;
+    }
+    .desktop-img {
+      display: none;
+    }
+    #intro-title {
+      font-size: 1.54rem;
+      padding-bottom: 10px;
+    }
+    /* --- DESKTOP VIEW (>= 768px) --- */
+    @media (min-width: 768px) {
+      .mobile-img {
+        display: none;
+      }
+      .desktop-img {
+        display: block;
+      }
+
+      #intro-title {
+        font-size: 2.24rem;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        bottom: auto;
+        padding-bottom: 0;
+      }
+
+      /* ── THE SKY ON DESKTOP ────────────────────────────────────────
+         Same four clouds and the same moon, restaged for a landscape
+         screen. Nothing above this block changes, so the phone keeps
+         exactly the composition it has.
+
+         The vw widths could not simply carry over: 93vw is 363px on a
+         phone and 1786px at 1920, which would be one cloud filling the
+         whole window. These are sized for the wide screen instead. */
+      .mob-sky {
+        /* Deliberately deeper than the town is tall. The lowest clouds
+           run down INTO the skyline's territory and are hidden by the
+           buildings, which is what removes the dead band of empty sky
+           above the rooftops. Stop the band at the horizon instead and
+           that gap comes back. */
+        height: 78%;
+
+        /* ---- THE BAND STOPS BEING A LAYER OF ITS OWN ----
+           The clouds have to paint ABOVE the town and the title while the
+           moon stays BEHIND the town. They cannot do both from inside one
+           container: a stacking context traps every child at the parent's
+           z-index, so the moon and the clouds could only ever move as one.
+
+           These three lines dissolve that context, which lets each cloud
+           and the moon compete directly with the town (z 2) and the title
+           (z 3). All three are load-bearing — restore any one of them and
+           the clouds drop back behind the buildings.
+
+             z-index: auto   no context from stacking
+             scale: none     no context from a transform (`scale: 1`
+                             would still make one — only `none` is inert)
+             will-change     the hint alone is enough to create one    */
+        z-index: auto;
+        scale: none;
+        will-change: auto;
+      }
+      #desk-btm-image { z-index: 2; }
+
+      /* Fading is per-element for the same reason: opacity below 1 on the
+         band would rebuild the very stacking context we just removed. */
+      .sky-cloud,
+      .sky-moon { opacity: var(--sky-fade, 1); }
+
+      /* `top` sets the moon's CENTRE (it is translated -50%), so this is
+         a third of the way down rather than the middle — it keeps the
+         moon clear of the title sitting at the centre of the screen.
+         Half the size it was, and still behind the town at z-index 1. */
+      .sky-moon { top: 32%; max-width: 130px; }
+
+      /* The delays are restaged for this width as well as the sizes. A
+         cloud's position at load is delay ÷ duration of its crossing, and
+         the crossing is 1920+cloud wide here against 390+cloud on a
+         phone — so the phone's delays landed all four in a clump in the
+         middle with the moon completely buried behind cloud-1. These
+         spread them across the window and leave the moon showing.
+
+         Widths are a fifth smaller than they were. The z-indexes all clear
+         the title at 3, so the clouds drift over the lettering and over
+         the rooftops; their order among themselves is unchanged. */
+      .cloud-4 { top:  2%; width: 24vw; z-index: 4; animation-delay: -76s; }
+      .cloud-3 { top: 34%; width: 19vw; z-index: 4; animation-delay: -46s; }
+      .cloud-1 { top: 14%; width: 30vw; z-index: 5; animation-delay: -29s; }
+      /* -65s is exactly half of this cloud's 130s crossing, and a crossing
+         is symmetrical about the middle of the window — so on load the
+         cloud sits dead centre WHATEVER the screen width, over the title,
+         and drifts off it to reveal "The Foundation". */
+      .cloud-2 { top: 55%; width: 22vw; z-index: 6; animation-delay: -65s; }
+    }
+    /* --- NEW CONTENT SECTION --- */
+    .content-section {
+      background-color: #fce9ce;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+
+      /* z-index 6, not 1.
+         .content-section is position:relative + z-index, so it makes a stacking
+         context: everything inside is locked to THIS number, and no z-index on a
+         child can climb above a sibling section. At 1 the draggable graphics were
+         painted under the old menu section (z-index 5) and got sliced off.
+         6 > 5 lets them overflow onto it; 6 < 10 keeps the intro reveal on top. */
+      z-index: 6;
+      margin-top: -100vh;
+      padding: 0;
+    }
+    /* --- HERO TOP AREA (Info Top Image + Background Ibises) --- */
+    .hero-top-area {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+    #info-top-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      position: relative;
+      z-index: 2;
+    }
+    .ibis-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .ibis {
+      position: absolute;
+      width: 20vw;
+      max-width: 280px;
+      min-width: 120px;
+      height: auto;
+      will-change: transform;
+    }
+    .ibis-1 {
+      top: 20%;
+      left: 0;
+      animation: flyRightToLeft 12s linear infinite;
+    }
+    .ibis-2 {
+      top: 55%;
+      left: 0;
+      animation: flyRightToLeft 16s linear infinite;
+      animation-delay: 4s;
+    }
+    @keyframes flyRightToLeft {
+      0% {
+        transform: translateX(120vw);
+      }
+      100% {
+        transform: translateX(-30vw);
+      }
+    }
+    #foundation-building-photo {
+      width: 100%;
+      height: auto;
+      display: block;
+      z-index: 4;
+      position: relative;
+      margin-top: 0;
+    }
+    /* --- THE PAGE LEDE ------------------------------------------------
+       The opening sentence of every page, in the serif, one size up from
+       the body. It is the same treatment as `.prose .lede` on the About
+       page — that rule now just inherits from this one.
+
+       It used to live in the rail beside the logo. It is now the first
+       thing in the main column on desktop, and sits directly under the
+       building photograph on a phone, so every page opens the same way. */
+    .page-lede {
+      font-family: 'Cormorant Garamond', Garamond, Georgia, serif;
+      font-weight: 500;
+      text-align: left;
+      color: var(--ink);
+      font-size: 1.5rem;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      margin: 2.5rem 0 2rem;
+      padding: 0 10%;
+      /* .content-section is a centring flex column on mobile, so a block
+         that is narrower than the screen gets centred as a flex item no
+         matter what text-align says. This is what keeps it left. */
+      width: 100%;
+      z-index: 4;
+      position: relative;
+    }
+    /* The home page's lede carries hard line breaks to hold its shape.
+       They only fit on desktop — at this size a phone line holds about
+       thirty characters — so on a phone the copy simply flows. */
+    .page-lede br { display: none; }
+    /* --- THE MENU ------------------------------------------------------
+       ONE <nav>, in the rail, serving both sizes.
+
+       On a phone it is a full-screen overlay opened by the burger. On
+       desktop the same element becomes a plain vertical list of words
+       under the logo. This is only possible because .rail now sits
+       OUTSIDE .content-section: that section is `position: relative` with
+       a z-index, so it is a stacking context, and a fixed overlay inside
+       it could never rise above the splash screen no matter its z-index.
+
+       ---- the burger, phone only ----
+       Three ink bars, no box. The drop-shadow is still doing work, only
+       inverted: the burger is FIXED, so it travels over cream paper for
+       most of the page but starts on the header artwork, which carries
+       dark tone at the top of info-top.png. A soft white halo is what
+       keeps ink bars legible there — on the paper it is invisible. */
+    .burger {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 30;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      display: grid;
+      place-content: center;
+      gap: 5px;
+      background: none;
+      border: 0;
+      cursor: pointer;
+      filter: drop-shadow(0 0 3px rgba(252, 233, 206, 0.9));
+      transition: opacity 0.5s ease;
+    }
+    .burger span {
+      display: block;
+      width: 26px;
+      height: 3px;
+      background: var(--ink);
+      transition: translate 0.3s ease, rotate 0.3s ease, opacity 0.2s ease,
+                  background-color 0.3s ease;
+    }
+    /* The three bars fold into a cross. 8px is the distance between bar
+       centres — 3px of bar plus the 5px gap — so the outer two land
+       exactly on the middle one. */
+    body.nav-open .burger span:nth-child(1) { translate: 0 8px;  rotate: 45deg; }
+    body.nav-open .burger span:nth-child(2) { opacity: 0; }
+    body.nav-open .burger span:nth-child(3) { translate: 0 -8px; rotate: -45deg; }
+    /* Open, it sits on the flat paper overlay, where the halo has nothing
+       to separate the bars from and only softens them. */
+    body.nav-open .burger { filter: none; }
+    /* Added by site.js on the home page only, and removed as the town
+       fades — the splash screen is meant to be uninterrupted. Nothing
+       here applies to a page without a splash. */
+    .burger.is-out { opacity: 0; pointer-events: none; }
+
+    /* ---- the overlay, phone only ---- */
+    .site-nav {
+      position: fixed;
+      inset: 0;
+      z-index: 28;
+      background-color: var(--paper);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.4rem;
+      padding: 0 10%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    body.nav-open .site-nav { opacity: 1; pointer-events: auto; }
+    .site-nav a {
+      font-family: 'Cormorant Garamond', Garamond, Georgia, serif;
+      font-weight: 500;
+      font-size: 2rem;
+      line-height: 1.1;
+      color: var(--ink);
+      text-decoration: none;
+      width: max-content;
+    }
+    .site-nav a[aria-current="page"] { border-bottom: 1px solid var(--ink); }
+    /* --- STACKED 2:3 RATIO PHOTOS SECTION --- */
+    .stacked-photos-container {
+      width: 100%;
+      position: relative;
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      /* Opens the gallery -> text gap to match the text -> menu gap.
+         The copy section already contributes 2rem of its own padding-top,
+         so subtract it here and the total lands on --section-gap. */
+      padding-bottom: calc(var(--section-gap) - 2rem);
+    }
+    .stacked-img {
+      display: block;
+      height: auto;
+      aspect-ratio: 2 / 3;
+      object-fit: cover;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .stacked-img.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* 1st Image: Sticky reveal */
+    .photo-1 {
+      width: 66.666%;
+      margin-left: auto;
+      margin-right: 0;
+      position: sticky;
+      top: 15vh;
+      z-index: 1;
+    }
+    /* 2nd Image: Left-aligned, overlaps 1st */
+    .photo-2 {
+      width: 75%;
+      margin-left: 0;
+      margin-right: auto;
+      margin-top: -10%;
+      position: relative;
+      z-index: 2;
+    }
+    /* 3rd Image: Right-aligned */
+    .photo-3 {
+      width: 50%;
+      margin-left: auto;
+      margin-right: 0;
+      margin-top: 4rem;
+      position: relative;
+      z-index: 3;
+    }
+    /* 4th Image: Left-aligned, overlaps 3rd */
+    .photo-4 {
+      width: 80%;
+      margin-left: 0;
+      margin-right: auto;
+      margin-top: -30%;
+      position: relative;
+      z-index: 4;
+    }
+    /* --- INTERACTIVE COPY SECTION (Draggable Overlays) --- */
+    .interactive-copy-section {
+      position: relative;
+      width: 100%;
+      padding: 2rem 0 1rem 0; /* Minimized padding to remove dead space */
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      z-index: 6; /* above the sections below, so the graphics float over them */
+    }
+    .interactive-copy-container {
+      width: 100%;
+      /* was 0 20% — on a 390px phone that left a 234px column of tiny text */
+      padding: 0 10%;
+      font-family: 'Inter', system-ui, sans-serif;
+      /* left, like every other block of type on the site */
+      text-align: left;
+      color: var(--ink);
+      font-size: var(--text-size);
+      line-height: 1.9;
+      z-index: 2;
+      position: relative;
+    }
+    @media (min-width: 768px) {
+      .interactive-copy-container { padding: 0 20%; }
+    }
+
+    /* An H2 for structure and SEO that carries no visual weight —
+       same family, same size, same colour as the copy around it.
+       The only signals are the normal-weight cap and the space beneath. */
+    .copy-heading {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: var(--text-size);
+      font-weight: 400;
+      line-height: 1.9;
+      color: var(--ink);
+      margin-bottom: 1.6em;
+    }
+    .draggable-wrapper {
+      position: absolute;
+      cursor: grab;
+      z-index: 10;
+      width: 25vw;
+      min-width: 120px;
+      max-width: 250px;
+      -webkit-user-drag: none;
+    }
+    .draggable-wrapper:active {
+      cursor: grabbing;
+    }
+    /* Pulse animation for the graphic in its rest state */
+    @keyframes pulseRest {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+    .draggable-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      pointer-events: none;
+      filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.15));
+      animation: pulseRest 2.5s ease-in-out infinite alternate;
+    }
+    .draggable-wrapper.is-dragging img {
+      animation-play-state: paused;
+    }
+    /* ── THE HONEY-BIRD AND THE FLOWERS ───────────────────────────────
+       One illustration cut in two. The flowers are fixed to the left edge
+       and sit under the copy; the bird is centred over both and is the
+       only piece that moves. Together they read as a single drawing until
+       someone pulls the bird off it.
+
+       Three layers inside .interactive-copy-section, which is itself a
+       stacking context:
+         1  the flowers        (.copy-floral)
+         2  the copy           (.interactive-copy-container)
+        10  the bird           (.draggable-wrapper)                     */
+    .copy-floral {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 46vw;
+      max-width: 320px;
+      height: auto;
+      z-index: 1;
+      pointer-events: none;
+      user-select: none;
+      /* site.js adds .is-out the moment the bird is touched. The flowers
+         are static, so unlike the bird they can never be moved off the
+         copy — retiring them is what makes the text readable. Once gone
+         they stay gone for the rest of the visit. */
+      transition: opacity 0.6s ease;
+    }
+    .copy-floral.is-out { opacity: 0; }
+
+    .drag-bird {
+      top: 50%;
+      left: 50%;
+      right: auto;
+      bottom: auto;
+      /* -50% centres it on the section. Dragging writes to `transform`,
+         which is a separate property, so the two compose: the bird moves
+         by exactly the drag distance from wherever it was centred. */
+      translate: -50% -50%;
+      width: 52vw;
+      max-width: 300px;
+      min-width: 150px;
+    }
+    /* The horizontal scroll menu that used to live here was replaced by
+       the tile grid below — see .link-grid. Its rules are gone rather
+       than commented out; git has them if the idea ever comes back. */
+
+    /* ═══════════════════════════════════════════════════════════════
+       THE TILE GRID — shared.
+       Lifted out of tenants.css because the landing page now uses the
+       same component for its four internal links. One definition, so the
+       two grids cannot drift apart.
+
+       The tenants page adds the category label and the click-to-open
+       panel on top of this; the landing page uses plain links. Artwork is
+       square, 1000 x 1000, transparent, and sits inside 14% padding.
+       ═══════════════════════════════════════════════════════════════ */
+    /* ── the grid ──────────────────────────────────────────────────────────── */
+    .tenant-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* a hairline lattice, drawn by the gap showing the ink through */
+      gap: 1px;
+      background: rgba(17, 17, 17, 0.16);
+      border-top: 1px solid rgba(17, 17, 17, 0.16);
+      /* PHONE: the grid is the last thing on both pages that use it, and
+         it closes on the footer's own black rule rather than drawing a
+         faint one of its own and then leaving a gap before it. Two lines
+         with 118px of paper between them read as an unfinished page; one
+         line reads as the end of it. Hence no bottom border and no
+         bottom margin — the desktop block puts both back, where the
+         footer is a different shape and the grid needs its own close. */
+      border-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    .tile { background: var(--paper); }
+    .tile[hidden] { display: none; }
+
+    .tile__hit {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: none;
+      font: inherit;
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
+      position: relative;
+    }
+    .tile__hit:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; }
+
+    /* Square frame, artwork centred with air around it. Logos and cut-out
+       photos both sit on the paper, which is what stops a grid of mixed
+       artwork looking broken. */
+    .tile__frame {
+      display: grid;
+      place-items: center;
+      aspect-ratio: 1 / 1;
+      padding: 14%;
+      overflow: hidden;
+    }
+    .tile__frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      transition: scale 0.5s var(--ease, cubic-bezier(.2,.8,.2,1));
+    }
+    .tile__hit:hover .tile__frame img { scale: 1.06; }
+
+    .tile__cat {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.7rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.4;
+    }
+    .tile__name {
+      display: block;
+      font-family: 'Cormorant Garamond', Garamond, Georgia, serif;
+      font-size: 1rem;
+      padding: 0 0.9rem 0.9rem;
+    }
+    /* The landing page's four links. Same tiles, no category label, and
+       an <a> in place of the panel button.
+
+       On the tenants page the grid sits INSIDE .content-section and gets
+       the column offset from it. Here it is a sibling of that section —
+       it replaced the horizontal strip, which carried its own offset — so
+       it has to bring its own at desktop, or the tiles span the whole
+       window (960px squares at 1920 instead of 384).
+
+       The copy section above ends with 1rem of padding on a phone and
+       21vh on desktop, which is why the top margin is only wanted at the
+       smaller size. */
+    .link-grid {
+      /* Opened up twice: 0.5 of the section gap, then 0.75, now a full
+         one — about 126px of paper on a 900px-tall phone. It is the only
+         thing separating the copy from the grid now that the grid runs
+         straight into the footer, so it carries more weight than it did.
+         The bottom margin is 0 (see .tenant-grid) — the grid closes on
+         the footer's rule. */
+      margin-top: var(--section-gap);
+    }
+    .link-grid .tile__hit { text-decoration: none; }
+
+    /* --- FOOTER -------------------------------------------------------
+       Plain type on paper. No sketch, no coast photograph, no ibises —
+       the artwork, the flight animation and the strip of sky above it are
+       all gone, along with the negative margin that used to pull the
+       whole thing up over the page.
+
+       Left-aligned at both sizes, on the same 10% inset the body copy
+       uses, so the footer reads as the last block of the page rather than
+       a separate centred sign-off. */
+    .site-footer {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      background-color: var(--paper);
+      border-top: 1px solid var(--ink);
+      margin-top: 0;
+    }
+
+    .footer-inner {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: var(--text-size);
+      line-height: 1.9;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      /* PHONE: centred, unlike the body copy. The footer is a sign-off
+         rather than a column of reading. Desktop puts it back to left,
+         where it sits on the site's own grid. */
+      text-align: center;
+      /* The band of clouds that used to run across the top of the footer
+         is gone, but the air it opened up is not: `min(16vw, 84px)` was
+         its exact height, and it now lives in this padding. So the page
+         breathes the same as it did, with nothing in the space. Room is
+         left here for more content later without re-tuning the rhythm. */
+      padding: calc(2.5rem + min(16vw, 84px)) 10% 3.5rem;
+    }
+
+    .footer-col + .footer-col { margin-top: 2rem; }
+    .footer-col p + p { margin-top: 1.2rem; }
+
+    /* underlined rather than coloured — there is only one ink on this site */
+    .footer-inner a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(17, 17, 17, 0.3);
+      transition: border-color 0.25s ease;
+    }
+    .footer-inner a:hover { border-bottom-color: var(--ink); }
+
+    /* ═══════════════════════════════════════════════════════════════
+       DESKTOP LAYOUT
+       Purely additive — nothing above this block changes.
+
+       The principle: full-bleed for the things that want scale, a measured
+       column for the things that don't. Full-bleed image, column of text,
+       full-bleed image. Everything here is a width; no choreography changes.
+
+       Two measures, because one doesn't fit. At 12.8px a 620px column runs
+       to ~95 characters a line, which is well past comfortable. Text gets a
+       narrower column than pictures do.
+       ═══════════════════════════════════════════════════════════════ */
+    @media (min-width: 768px) {
+      :root {
+        --measure-text: 480px;   /* reading column, ~65 characters */
+        --measure-wide: 860px;   /* gallery and the section that frames it */
+        --bleed-cap:   1800px;   /* stops full-bleed art upscaling on huge monitors */
+      }
+
+      /* ---- FULL BLEED, just capped so the artwork isn't upscaled ---- */
+      #info-top-image,
+      #foundation-building-photo {
+        max-width: var(--bleed-cap);
+        margin-inline: auto;
+      }
+
+      /* ---- GALLERY: two offset columns instead of one tall stack ----
+         On mobile these are four full-width photos stacked with negative
+         margins — six screens tall on a laptop. Side by side with a stagger
+         they take about 1.5 screens and use the room desktop actually has.
+         Adjust the four margin-top values to re-time the stagger. */
+      .stacked-photos-container {
+        max-width: var(--measure-wide);
+        margin-inline: auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 3rem;
+        align-items: start;
+      }
+      .stacked-img { position: static; }
+
+      .photo-1 { grid-column: 1; width: 100%; margin: 0; }
+      .photo-2 { grid-column: 2; width: 88%;  margin: 7rem 0 0 0; justify-self: start; }
+      .photo-3 { grid-column: 1; width: 76%;  margin: -3rem 0 0 auto; }
+      .photo-4 { grid-column: 2; width: 100%; margin: -1rem 0 0 0; }
+
+      /* ---- COPY + DRAGGABLES ----
+         The section is capped too, not just the text. It is the positioning
+         context for the animals, so capping it keeps them near the column
+         instead of stranded against the window edge on a wide monitor.
+         The gap between the 860px section and the 480px text is deliberate:
+         that margin is where the animals live. */
+      .interactive-copy-section {
+        max-width: var(--measure-wide);
+        margin-inline: auto;
+      }
+      .interactive-copy-container {
+        max-width: var(--measure-text);
+        margin-inline: auto;
+        padding: 0;
+      }
+
+    }
+
+    /* ── MOBILE: the rail is not a thing ─────────────────────────────
+       `display: contents` removes the wrapper from layout entirely, so the
+       intro text and button remain direct children of .content-section in
+       their original order. Nothing about the phone layout changes. */
+    /* The stamp and its ibises are a desktop thing. Hiding the frame here
+       keeps the phone exactly as it was — the logo inside was already
+       hidden, and the ibis layer never renders. */
+    .stamp-frame { display: none; }
+    .stamp-logo { display: none; }
+    .rail { display: contents; }
+    .rail-divide { display: none; }
+
+    /* ═══════════════════════════════════════════════════════════════
+       DESKTOP  (1024px and up)
+
+       A fixed left rail — stamp, intro, button — and everything else
+       running past it on the right in the same arrangement as the phone.
+
+       The rail is position:fixed rather than sticky, which does three jobs
+       at once: it stays put without belonging to any section, the splash
+       above it (z-index 10) hides it until the town fades, and the footer
+       below it (z-index 10) covers it at the end. Only the sideways push
+       when the menu arrives needs JavaScript.
+       ═══════════════════════════════════════════════════════════════ */
+    @media (min-width: 1024px) {
+      :root {
+        /* ── THE FRAMEWORK ──────────────────────────────────────────
+           ONE number now. --pad is the margin of the whole page: the
+           logo's top inset, the logo's left inset, the gap between the
+           divider and the content, and the gap from the content to the
+           right edge of the window are all the same measurement, so the
+           layout reads as a single framed field rather than four
+           unrelated insets. Change --pad and every page follows.        */
+        --pad:         5vw;
+
+        --rail-w:      50vw;         /* the static column */
+        --rail-pad-l:  var(--pad);   /* its inner left inset */
+        --rail-pad-r:  var(--pad);   /* keeps text off the divider */
+        --gutter:      var(--pad);   /* content's inset from the divider */
+        --edge:        var(--pad);   /* content's inset from the window */
+
+        --content-left: var(--rail-w);
+        --content-pad:  var(--gutter);
+
+        /* The logo, sized by WIDTH. A quarter larger than it was
+           (22vw/420px), now that it is the only thing in the rail.
+           This is the one number to change if it wants to be bigger. */
+        --stamp-w:      min(27.5vw, 525px);
+      }
+
+      /* ---- the static column ---- */
+      .rail {
+        display: block;
+        position: fixed;
+        /* the logo's top inset — the same measurement as its left one */
+        top: var(--pad);
+        left: 0;
+        width: var(--rail-w);
+        max-width: none;
+        padding: 0 var(--rail-pad-r) 0 var(--rail-pad-l);
+        text-align: left;
+        /* below the splash (z-10) so the town hides it, and below the
+           footer (z-10) which is what pushes it away at the end */
+        z-index: 7;
+        will-change: transform;
+      }
+      /* ---- the stamp, and the ibises crossing it ----
+         The frame is the logo's own box. It carries the width and the
+         margin that used to sit on the image, so the ibis layer inside
+         can be measured against exactly the area the artwork occupies. */
+      .stamp-frame {
+        display: block;
+        position: relative;
+        width: var(--stamp-w);
+        margin: 0 0 3rem;
+      }
+      .stamp-frame > a { display: block; }
+      .stamp-logo {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 0;
+        /* above the birds, so they pass behind the linework the way they
+           pass behind the header artwork on a phone */
+        position: relative;
+        z-index: 2;
+      }
+
+      /* The top two fifths of the stamp, and nothing outside it.
+         `overflow: hidden` is the whole trick: the birds are always
+         crossing, and this is what limits them to the logo's area. */
+      .ibis-container--stamp {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 40%;
+        overflow: hidden;
+        z-index: 1;
+        pointer-events: none;
+      }
+      /* The shared .ibis rule is sized in vw for a full-width header —
+         20vw would be wider than the whole stamp. These are a fraction of
+         the frame instead, so they scale with the logo. */
+      .ibis-container--stamp .ibis {
+        position: absolute;
+        width: 24%;
+        min-width: 0;
+        max-width: none;
+        height: auto;
+        will-change: translate;
+        animation-name: flyAcrossStamp;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+      }
+      .ibis-container--stamp .ibis-1 { top:  8%; animation-duration: 19s; animation-delay:  -6s; }
+      .ibis-container--stamp .ibis-2 { top: 46%; animation-duration: 26s; animation-delay: -18s; }
+
+      /* Starts one frame-width to the right (fully off), ends one of its
+         own widths to the left (fully off). Reading --stamp-w means the
+         flight path re-measures itself if the logo is ever resized. */
+      @keyframes flyAcrossStamp {
+        from { translate: var(--stamp-w) 0; }
+        to   { translate: -100% 0; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .ibis-container--stamp .ibis { animation-play-state: paused; }
+      }
+      /* ---- the menu, as a plain column of words under the logo ----
+         Same element as the phone's full-screen overlay; everything that
+         made it an overlay is undone here. */
+      .site-nav {
+        position: static;
+        inset: auto;
+        z-index: auto;
+        background: none;
+        opacity: 1;
+        pointer-events: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.55rem;
+        padding: 0;
+        transition: none;
+      }
+      .site-nav a {
+        font-size: 1.15rem;
+        opacity: 0.55;
+        border-bottom: 0;
+        transition: opacity 0.25s ease;
+      }
+      .site-nav a:hover { opacity: 1; }
+      .site-nav a[aria-current="page"] { opacity: 1; border-bottom: 0; }
+
+      /* ---- the divide ----
+         Same weight and same colour as the line across the top of the
+         footer, so the two read as one drawn system. */
+      .rail-divide {
+        display: block;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: var(--rail-w);
+        width: 1px;
+        z-index: 7;
+        pointer-events: none;
+        background: var(--ink);
+      }
+
+      /* the stamp replaces these two: both were full width and read as a
+         second splash screen. One line each to bring them back. */
+      .hero-top-area,
+      #foundation-building-photo { display: none; }
+
+      /* ---- the content column ---- */
+      .content-section {
+        padding-left: calc(var(--content-left) + var(--content-pad));
+        padding-right: var(--edge);
+        /* back to the logo's own line, now that nothing sits in the
+           top-right corner for the lede to clear */
+        padding-top: var(--pad);
+        align-items: stretch;
+      }
+
+      /* The lede opens the column, at the column's own left edge, one
+         size larger than on a phone. */
+      .content-section > .page-lede {
+        max-width: none;
+        padding: 0;
+        margin: 0 0 4rem;
+        font-size: 1.75rem;
+      }
+
+      /* no burger on desktop — the menu is always on show in the rail */
+      .burger { display: none; }
+      /* the shaped lede keeps its hard line breaks here */
+      .page-lede br { display: inline; }
+
+      /* ---- GALLERY ----
+         Sized off the column, not a fixed pixel width, so the photos always
+         fill it. The rules are nth-child patterns repeating every four, so
+         adding a fifth, sixth, seventh image just continues the rhythm —
+         nothing here is hard-coded to the four that exist today. */
+      .stacked-photos-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        /* The gap below the gallery is owned by the copy section's padding
+           — one number to tune, not two. This 19px is not spacing: the
+           last photo's negative top margin leaves it hanging that far
+           past the container's content box, and this puts the two edges
+           back in line so the gap above the copy equals the gap below. */
+        padding-bottom: 19px;
+      }
+      .stacked-img { position: static; }
+
+      .stacked-img:nth-child(4n + 1) { width: 64%; margin: 0 0 0 auto; }
+      .stacked-img:nth-child(4n + 2) { width: 78%; margin: -7% auto 0 0; }
+      .stacked-img:nth-child(4n + 3) { width: 50%; margin: 7rem 0 0 auto; }
+      .stacked-img:nth-child(4n + 4) { width: 88%; margin: -12% auto 0 0; }
+      .stacked-img:first-child { margin-top: 0; }
+
+      /* two sticky moments per group of four, at different heights, so the
+         reveal happens more than once as the column scrolls */
+      .stacked-img:nth-child(4n + 1) { position: sticky; top: 14vh; }
+      .stacked-img:nth-child(4n + 3) { position: sticky; top: 22vh; }
+
+      /* ---- MAIN COPY + CUT-OUTS ----
+         The old gap above this block was 388px at 1440: 126px of gallery
+         padding, 90px of section padding, and 172px of slack from
+         centring a 337px paragraph inside a 100vh section. Dropping the
+         min-height removes the slack, which is what makes the space
+         controllable at all — now ONE number sets the space above and
+         the space below, and they are equal by construction. */
+      .interactive-copy-section {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        min-height: auto;
+        justify-content: flex-start;
+        padding: calc(var(--section-gap) * 1.5) 2vw;
+      }
+      .interactive-copy-container {
+        max-width: 460px;
+        padding: 0;
+        text-align: left;
+      }
+      .copy-heading { text-align: left; }
+
+      /* ---- the flowers, hard against the divider ----
+         An absolutely positioned child is laid out against its ancestor's
+         PADDING box, so `left: 0` here is the content column's left edge —
+         which sits one --gutter to the right of the divider line. Pulling
+         it back by that gutter is what puts the artwork flush against the
+         line. Nothing clips it: .content-section has no overflow rule. */
+      .copy-floral {
+        left: calc(-1 * var(--gutter));
+        bottom: 0;
+        width: 16vw;
+        max-width: 227px;
+      }
+
+      /* ---- the bird, centred over the column ---- */
+      .interactive-copy-section .draggable-wrapper { min-width: 0; }
+      .drag-bird {
+        width: 29vw;
+        max-width: 427px;
+        /* Percentages in `translate` are of the element's OWN size, so
+           this is exact rather than approximate: -75% is the -50% that
+           centred it plus a quarter of its width to the left, and 0 is
+           the -50% that centred it plus half its height downwards. */
+        translate: -75% 0;
+      }
+
+
+
+
+      /* two-up still: the column is half the window, and four across would
+         render the artwork at thumbnail size */
+      .tenant-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* Both come back here. On desktop the grid sits inside the content
+           column with the divider running down its left, so it is a block
+           on the page rather than the page's last edge — it needs to close
+           itself, and it needs air beneath before the footer rule. */
+        border-bottom: 1px solid rgba(17, 17, 17, 0.16);
+        margin-bottom: var(--section-gap);
+      }
+      .tile__name { font-size: 1.12rem; }
+
+      /* the landing grid brings its own column offset — see the note by
+         .link-grid above */
+      .link-grid {
+        margin-top: 0;
+        margin-left: calc(var(--content-left) + var(--content-pad));
+        margin-right: var(--edge);
+        /* the same --pad the grid keeps from the divider on its left and
+           from the window on its right, so the block sits in an even
+           frame rather than a wide one with a deep gap beneath */
+        margin-bottom: var(--pad);
+        width: auto;
+      }
+
+      /* ---- FOOTER ----
+         One column at the left, both blocks stacked. The second used to
+         start on the content column's line, which put half the footer
+         under the middle of the page; pulled back under the first, it
+         leaves the whole right-hand side empty. That emptiness is the
+         point — the footer is the quietest thing on the site, and there
+         is room to grow into it without changing this rule. */
+      .footer-inner {
+        display: block;
+        padding: var(--pad);
+        /* the clouds' old desktop height (5vw), kept as air */
+        padding-top: calc(var(--pad) + 5vw);
+        /* left, not centred: the block sits on the same line as the logo
+           and the rail above it */
+        text-align: left;
+      }
+      .footer-col + .footer-col { margin-top: 2.5rem; }
+    }
+
+/* Content for screen readers and search engines that the design doesn't
+   show — a real <h1> on pages whose visible heading is an illustration. */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

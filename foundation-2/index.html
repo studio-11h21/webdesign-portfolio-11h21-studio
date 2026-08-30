@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- CLIENT PREVIEW ONLY — REMOVE BEFORE LAUNCH.
+       Keeps this copy out of Google so it never competes with the
+       real site, or with 11h21.studio itself. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <title>The Foundation — Knysna</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+
+  <!-- THE SPLASH SCREEN — CURRENTLY ALWAYS ON.
+       ┌──────────────────────────────────────────────────────────────┐
+       │  REMEMBER_SPLASH = false  →  the town screen is always at    │
+       │                              the top of this page, and you   │
+       │                              can scroll back up to it.       │
+       │  REMEMBER_SPLASH = true   →  it shows once per browser tab;  │
+       │                              coming Home from the menu lands │
+       │                              straight on the content.        │
+       └──────────────────────────────────────────────────────────────┘
+       Flip that one word below to switch. Nothing else needs touching:
+       the two CSS rules in site.css and the `splashSeen` test in
+       site.js are both inert while the class never lands on <html>.
+
+       Why it is inline and in the <head>: the class has to be on <html>
+       before the first paint, or the town screen flashes up and vanishes.
+
+       sessionStorage, not localStorage — the memory would last as long as
+       the tab is open, so a new tab brings the splash back. That is the
+       right behaviour for a landing screen.
+
+       ?splash in the address forces the splash even when remembering is
+       on, which is the easy way to demo the opening.
+
+       try/catch because private browsing can make sessionStorage throw on
+       access; if it does, the splash simply shows every time. -->
+  <script>
+    (function () {
+      var REMEMBER_SPLASH = false;          // ← the switch
+      if (!REMEMBER_SPLASH) return;
+
+      var KEY = 'foundation-splash-seen';
+      try {
+        if (location.search.indexOf('splash') > -1) {
+          sessionStorage.removeItem(KEY);
+        } else if (sessionStorage.getItem(KEY)) {
+          document.documentElement.classList.add('splash-seen');
+        }
+        sessionStorage.setItem(KEY, '1');
+      } catch (e) { /* no storage — always show it */ }
+    })();
+  </script>
+</head>
+
+<body>
+  <!-- 1. INTRO TOWN SCROLL -->
+  <div class="scroll-container" id="scroll-container">
+    <div class="sticky-wrapper" id="sticky-wrapper">
+
+      <!-- MOBILE SKY — moon and drifting clouds.
+           Replaces the single town-top-mobile.png. The moon is fixed dead
+           centre of the band; the three clouds cross it on a slow loop,
+           each at its own height, size and speed, so they overlap each
+           other and the moon differently on every pass.
+
+           cloud-3 is painted BEHIND the moon and the other two in front,
+           which is what stops the stack reading as flat. Swap the
+           z-indexes in site.css if you want them all in front. -->
+      <!-- No `mobile-img` class any more: the sky runs at BOTH sizes now.
+           The phone keeps the values below exactly as they were; the
+           desktop overrides live in the 768px block of site.css. -->
+      <div class="mob-sky" id="mob-sky" aria-hidden="true">
+        <img src="images/hero/moon.png"    alt="" class="sky-moon" />
+        <img src="images/hero/cloud-4.png" alt="" class="sky-cloud cloud-4" />
+        <img src="images/hero/cloud-3.png" alt="" class="sky-cloud cloud-3" />
+        <img src="images/hero/cloud-1.png" alt="" class="sky-cloud cloud-1" />
+        <img src="images/hero/cloud-2.png" alt="" class="sky-cloud cloud-2" />
+      </div>
+      <!-- town-top-desktop.png used to sit here. The sky below now does
+           that job at both sizes, so the element is gone rather than
+           hidden — a hidden <img> still downloads. site.js tolerates its
+           absence; put it back and everything still works. -->
+
+      <!-- INTRO TITLE PLACED UNDERNEATH TOP IMAGES -->
+      <h1 id="intro-title" class="brand-heading-font">The Foundation</h1>
+      <!-- Mobile Bottom Image -->
+      <img
+        src="images/hero/town-bottom-mobile.png"
+        alt="Knysna Town Bottom Mobile"
+        id="mob-btm-image"
+        class="scroll-img mobile-img"
+      />
+      <!-- Desktop Bottom Image — 3000 x 750 transparent PNG, so the moon
+           and clouds pass BEHIND the skyline rather than over it. -->
+      <img
+        src="images/hero/town-desktop.png"
+        alt="Knysna Town Bottom Desktop"
+        id="desk-btm-image"
+        class="scroll-img desktop-img"
+      />
+    </div>
+  </div>
+  <!-- Desktop only: the hairline between the static column and the content
+       column. A separate element rather than part of .rail, because the rail
+       gets pushed up by the footer and the line must not travel with it. -->
+  <div class="rail-divide" aria-hidden="true"></div>
+
+  <!-- LOGO + MENU. Outside .content-section deliberately: that section is
+       a stacking context, and the phone's full-screen menu could never
+       rise above the splash screen from inside it.
+       On mobile .rail is `display: contents` and the logo is hidden, so
+       all that remains of this block is the overlay. -->
+  <div class="rail" id="rail">
+    <!-- THE STAMP, and the ibises that fly across its upper third.
+         The frame is what confines them: it is the logo's own box, and
+         the ibis layer inside is clipped to the top 2/5ths of it. -->
+    <div class="stamp-frame">
+      <img
+        src="images/hero/foundation-stamp-desktop.png"
+        alt="The Foundation, Knysna"
+        class="stamp-logo"
+      />
+      <div class="ibis-container ibis-container--stamp" aria-hidden="true">
+        <img src="images/decor/ibis-1.png" alt="" class="ibis ibis-1" />
+        <img src="images/decor/ibis-2.png" alt="" class="ibis ibis-2" />
+      </div>
+    </div>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="tenants.html">Tenants</a>
+      <a href="about.html">Our Story</a>
+      <a href="team.html">Our Team</a>
+      <a href="contact.html">Contact</a>
+      <!-- Events is a page no longer; this is the account instead. -->
+      <a href="https://www.instagram.com/thefoundationknysna/" target="_blank" rel="noopener">Instagram</a>
+    </nav>
+  </div>
+
+  <!-- Phone only: opens the menu above. Paper-filled so it reads over the
+       dark cloud at the top of info-top.png. -->
+  <button class="burger" id="burger" type="button" aria-label="Menu"
+          aria-expanded="false" aria-controls="site-nav">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- 2. FOUNDATION CONTENT SECTION -->
+  <div class="content-section">
+
+    <!-- Hero Top Area with Info Top Image and Background Ibises -->
+    <div class="hero-top-area">
+      <div class="ibis-container">
+        <img src="images/decor/ibis-1.png" alt="" class="ibis ibis-1" />
+        <img src="images/decor/ibis-2.png" alt="" class="ibis ibis-2" />
+      </div>
+      <img
+        src="images/hero/info-top.png"
+        alt="Knysna Info Top"
+        id="info-top-image"
+      />
+    </div>
+    <!-- Building Photo -->
+    <img
+      src="images/hero/building-photo.png"
+      alt="The Foundation Building Photo"
+      id="foundation-building-photo"
+    />
+    <!-- THE LEDE. Outside the rail, so it is the first thing in the main
+         column on desktop and sits directly under the building photograph
+         on a phone. Every page opens this way. -->
+    <div class="page-lede">
+      The Foundation<br>
+      Is a Space of Creativity<br>
+      And more words here for client<br>
+      To decide what they would like to say<br>
+      But must try to keep this shape for the words
+    </div>
+    <!-- STACKED 2:3 RATIO PHOTOS -->
+    <div class="stacked-photos-container">
+      <img src="images/gallery/the-foundation-knysna-coffee.jpg" alt="Coffee at The Foundation" class="stacked-img photo-1" />
+      <img src="images/gallery/the-foundation-knysna-shop.jpg" alt="Shop at The Foundation" class="stacked-img photo-2" />
+      <img src="images/gallery/the-foundation-knysna-pancakes.jpg" alt="Pancakes at The Foundation" class="stacked-img photo-3" />
+      <img src="images/gallery/the-foundation-knysna-yoga.jpg" alt="Yoga at The Foundation" class="stacked-img photo-4" />
+    </div>
+    <!-- INTERACTIVE COPY SECTION (Draggable overlays over text) -->
+    <div class="interactive-copy-section">
+
+      <!-- THE FLOWERS — static, hard against the left edge of the column
+           (the divider line on desktop) and BENEATH the copy. Not a
+           .draggable-wrapper, so it neither moves nor pulses. -->
+      <img src="images/decor/floral.png" alt="" class="copy-floral" />
+
+      <div class="interactive-copy-container">
+        <h2 class="copy-heading">The Heading</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio.</p>
+        <br>
+        <p>Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit.</p>
+      </div>
+      <!-- THE BIRD — the other half of the same illustration. Draggable,
+           and painted above both the copy and the flowers, so it reads as
+           one drawing until the visitor pulls it away.
+
+           A <div>, not an <a>: the three graphics this replaces linked to
+           page-1/2/3.html, which never existed. Wrap it in a link if you
+           want it to go somewhere. -->
+      <div class="draggable-wrapper drag-bird" data-x="0" data-y="0">
+        <img src="images/decor/bird.png" alt="" />
+      </div>
+    </div>
+
+  </div>
+  <!-- 3. THE LINKS — the tenants grid, reused.
+       Same component, same hairline lattice, same square frames. The
+       tiles are plain links here rather than the tenants page's panel
+       buttons, and there is no category label. Artwork: 1000 x 1000
+       transparent PNG, sitting inside the frame's 14% padding. -->
+  <nav class="tenant-grid link-grid" aria-label="Explore The Foundation">
+      <article class="tile">
+        <a class="tile__hit" href="tenants.html">
+          <span class="tile__frame">
+            <img src="images/links/our-tenants.png" alt="" width="1000" height="1000" loading="lazy" />
+          </span>
+          <span class="tile__name">Our Tenants</span>
+        </a>
+      </article>
+      <article class="tile">
+        <a class="tile__hit" href="about.html">
+          <span class="tile__frame">
+            <img src="images/links/our-story.png" alt="" width="1000" height="1000" loading="lazy" />
+          </span>
+          <span class="tile__name">Our Story</span>
+        </a>
+      </article>
+      <article class="tile">
+        <a class="tile__hit" href="team.html">
+          <span class="tile__frame">
+            <img src="images/links/our-team.png" alt="" width="1000" height="1000" loading="lazy" />
+          </span>
+          <span class="tile__name">Our Team</span>
+        </a>
+      </article>
+      <article class="tile">
+        <a class="tile__hit" href="contact.html">
+          <span class="tile__frame">
+            <img src="images/links/contact.png" alt="" width="1000" height="1000" loading="lazy" />
+          </span>
+          <span class="tile__name">Contact</span>
+        </a>
+      </article>
+  </nav>
+
+  <!-- FOOTER — plain text, no artwork and no animation. One column at the
+       left on desktop, centred on a phone, with deliberate empty space
+       around it. Room here for more content later. -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+
+      <div class="footer-col">
+        <p>
+          The Foundation<br>
+          21 Main Road<br>
+          Knysna, 6540
+        </p>
+        <p><a href="tel:+27123456721">+27 123 4567 21</a></p>
+      </div>
+
+      <div class="footer-col">
+        <p>
+          Mon &ndash; Fri: 9am &ndash; 5pm<br>
+          Sat: 10am &ndash; 3pm<br>
+          Sun: closed
+        </p>
+        <p><a href="https://www.instagram.com/thefoundationknysna/"
+              target="_blank" rel="noopener">Instagram</a></p>
+      </div>
+
+    </div>
+  </footer>
+  <script src="js/site.js"></script>
+</body>
+</html>

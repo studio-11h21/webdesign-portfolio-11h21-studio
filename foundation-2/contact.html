@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- CLIENT PREVIEW ONLY — REMOVE BEFORE LAUNCH.
+       Keeps this copy out of Google so it never competes with the
+       real site, or with 11h21.studio itself. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Contact — The Foundation, Knysna</title>
+  <meta name="description" content="How to find, telephone and email The Foundation, a historic building on Main Road, Knysna." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/page.css">
+
+  <style>
+    /* No splash above this page, so the content section must not pull
+       itself up by a screen the way the home page does. */
+    .content-section { margin-top: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- Desktop only: the hairline between the static column and the content
+       column. A separate element rather than part of .rail, because the rail
+       gets pushed up by the footer and the line must not travel with it. -->
+  <div class="rail-divide" aria-hidden="true"></div>
+
+  <!-- LOGO + MENU. Outside .content-section deliberately: that section is
+       a stacking context, and the phone's full-screen menu could never
+       rise above it from inside. -->
+  <div class="rail" id="rail">
+    <!-- THE STAMP, and the ibises that fly across its upper third.
+         The frame is what confines them: it is the logo's own box, and
+         the ibis layer inside is clipped to the top 2/5ths of it. -->
+    <div class="stamp-frame">
+      <a href="index.html"><img
+        src="images/hero/foundation-stamp-desktop.png"
+        alt="The Foundation, Knysna"
+        class="stamp-logo"
+      /></a>
+      <div class="ibis-container ibis-container--stamp" aria-hidden="true">
+        <img src="images/decor/ibis-1.png" alt="" class="ibis ibis-1" />
+        <img src="images/decor/ibis-2.png" alt="" class="ibis ibis-2" />
+      </div>
+    </div>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="tenants.html">Tenants</a>
+      <a href="about.html">Our Story</a>
+      <a href="team.html">Our Team</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+      <!-- Events is a page no longer; this is the account instead. -->
+      <a href="https://www.instagram.com/thefoundationknysna/" target="_blank" rel="noopener">Instagram</a>
+    </nav>
+  </div>
+
+  <button class="burger" id="burger" type="button" aria-label="Menu"
+          aria-expanded="false" aria-controls="site-nav">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="content-section">
+
+    <!-- The building, clouds and ibises — the header on every page -->
+    <div class="hero-top-area">
+      <div class="ibis-container">
+        <img src="images/decor/ibis-1.png" alt="" class="ibis ibis-1" />
+        <img src="images/decor/ibis-2.png" alt="" class="ibis ibis-2" />
+      </div>
+      <img src="images/hero/info-top.png" alt="The Foundation, Knysna" id="info-top-image" />
+    </div>
+
+    <!-- Building Photo — mobile only (hidden at 1024px, where the stamp in
+         the rail is the identity instead). Same header as the home page. -->
+    <img
+      src="images/hero/building-photo.png"
+      alt="The Foundation Building Photo"
+      id="foundation-building-photo"
+    />
+
+    <!-- THE LEDE — outside the rail, so it opens the main column on
+         desktop and sits under the building photograph on a phone. -->
+    <h1 class="visually-hidden">Contact</h1>
+    <p class="page-lede">
+      The door is on Main Road and it is usually open. Come in, or write
+      to us first if you would rather.
+    </p>
+
+    <!-- PROSE COLUMN. Placeholder copy and photographs throughout —
+         replace with the real names, roles and portraits. -->
+    <div class="prose">
+
+      <p>
+        Placeholder. The quickest way to reach anyone here is to walk in
+        and ask — but the details below work too, and someone reads the
+        inbox most days.
+      </p>
+
+      <h2>Find us</h2>
+      <dl class="facts">
+        <div><dt>Address</dt><dd>21 Main Road, Knysna, 6540</dd></div>
+        <div><dt>Parking</dt><dd>Behind the building, off Queen Street</dd></div>
+        <div><dt>Weekdays</dt><dd>9am – 5pm</dd></div>
+        <div><dt>Saturday</dt><dd>10am – 3pm</dd></div>
+        <div><dt>Sunday</dt><dd>Closed, mostly</dd></div>
+      </dl>
+
+      <h2>Get in touch</h2>
+      <dl class="facts">
+        <div><dt>General</dt><dd>hello@placeholder.co.za</dd></div>
+        <div><dt>Telephone</dt><dd>+27 123 4567 21</dd></div>
+        <div><dt>Taking a unit</dt><dd>units@placeholder.co.za</dd></div>
+        <div><dt>Events and hire</dt><dd>events@placeholder.co.za</dd></div>
+        <div><dt>Instagram</dt><dd>@placeholder</dd></div>
+      </dl>
+
+      <figure>
+        <img src="images/gallery/the-foundation-knysna-shop.jpg" alt="The entrance on Main Road" />
+        <figcaption>Placeholder — the Main Road entrance</figcaption>
+      </figure>
+
+      <h2>Hiring the building</h2>
+      <p>
+        The courtyard and the upstairs landing can both be taken for
+        private events outside trading hours. Three weeks' notice, and
+        longer in December.
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- FOOTER — plain text, no artwork and no animation. One column at the
+       left on desktop, centred on a phone, with deliberate empty space
+       around it. Room here for more content later. -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+
+      <div class="footer-col">
+        <p>
+          The Foundation<br>
+          21 Main Road<br>
+          Knysna, 6540
+        </p>
+        <p><a href="tel:+27123456721">+27 123 4567 21</a></p>
+      </div>
+
+      <div class="footer-col">
+        <p>
+          Mon &ndash; Fri: 9am &ndash; 5pm<br>
+          Sat: 10am &ndash; 3pm<br>
+          Sun: closed
+        </p>
+        <p><a href="https://www.instagram.com/thefoundationknysna/"
+              target="_blank" rel="noopener">Instagram</a></p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="js/site.js"></script>
+</body>
+</html>

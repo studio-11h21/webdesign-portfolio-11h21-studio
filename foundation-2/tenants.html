@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- CLIENT PREVIEW ONLY — REMOVE BEFORE LAUNCH.
+       Keeps this copy out of Google so it never competes with the
+       real site, or with 11h21.studio itself. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Tenants — The Foundation, Knysna</title>
+  <meta name="description" content="The makers, growers and menders of The Foundation, a historic building in Knysna." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- the shared framework, then this page's own rules -->
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/tenants.css">
+
+  <style>
+    /* Internal pages have no splash above them, so the content section must
+       not pull itself up by a screen the way the home page does. */
+    .content-section { margin-top: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- Desktop only: the hairline between the static column and the content
+       column. A separate element rather than part of .rail, because the rail
+       gets pushed up by the footer and the line must not travel with it. -->
+  <div class="rail-divide" aria-hidden="true"></div>
+
+  <!-- LOGO + MENU. Outside .content-section deliberately: that section is
+       a stacking context, and the phone's full-screen menu could never
+       rise above it from inside. -->
+  <div class="rail" id="rail">
+    <!-- THE STAMP, and the ibises that fly across its upper third.
+         The frame is what confines them: it is the logo's own box, and
+         the ibis layer inside is clipped to the top 2/5ths of it. -->
+    <div class="stamp-frame">
+      <a href="index.html"><img
+        src="images/hero/foundation-stamp-desktop.png"
+        alt="The Foundation, Knysna"
+        class="stamp-logo"
+      /></a>
+      <div class="ibis-container ibis-container--stamp" aria-hidden="true">
+        <img src="images/decor/ibis-1.png" alt="" class="ibis ibis-1" />
+        <img src="images/decor/ibis-2.png" alt="" class="ibis ibis-2" />
+      </div>
+    </div>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="tenants.html" aria-current="page">Tenants</a>
+      <a href="about.html">Our Story</a>
+      <a href="team.html">Our Team</a>
+      <a href="contact.html">Contact</a>
+      <!-- Events is a page no longer; this is the account instead. -->
+      <a href="https://www.instagram.com/thefoundationknysna/" target="_blank" rel="noopener">Instagram</a>
+    </nav>
+  </div>
+
+  <button class="burger" id="burger" type="button" aria-label="Menu"
+          aria-expanded="false" aria-controls="site-nav">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="content-section">
+
+    <!-- The building, clouds and ibises — the header on every page -->
+    <div class="hero-top-area">
+      <div class="ibis-container">
+        <img src="images/decor/ibis-1.png" alt="" class="ibis ibis-1" />
+        <img src="images/decor/ibis-2.png" alt="" class="ibis ibis-2" />
+      </div>
+      <img src="images/hero/info-top.png" alt="The Foundation, Knysna" id="info-top-image" />
+    </div>
+
+    <!-- Building Photo — mobile only (hidden at 1024px, where the stamp in
+         the rail is the identity instead). Same header as the home page. -->
+    <img
+      src="images/hero/building-photo.png"
+      alt="The Foundation Building Photo"
+      id="foundation-building-photo"
+    />
+
+    <!-- THE LEDE — outside the rail, so it opens the main column on
+         desktop and sits under the building photograph on a phone. -->
+    <h1 class="visually-hidden">Tenants</h1>
+    <p class="page-lede">
+      Thirty-odd independents share this building. Bakers, binders,
+      brewers and a yoga room in the rafters. Pick a trade, or wander
+      through the lot.
+    </p>
+
+    <!-- FILTERS. One category per tenant; the choice is written to the URL,
+         so a filtered view can be linked to and the back button steps
+         through it. -->
+    <div class="filters" id="tenant-filters" role="group" aria-label="Filter tenants by trade">
+      <button class="filter is-on" type="button" data-filter="all" aria-pressed="true">everyone</button>
+      <button class="filter" type="button" data-filter="health" aria-pressed="false">health</button>
+      <button class="filter" type="button" data-filter="eat" aria-pressed="false">eat</button>
+      <button class="filter" type="button" data-filter="drink" aria-pressed="false">drink</button>
+      <button class="filter" type="button" data-filter="craft" aria-pressed="false">craft</button>
+      <button class="filter" type="button" data-filter="art" aria-pressed="false">art</button>
+      <button class="filter" type="button" data-filter="fashion" aria-pressed="false">fashion</button>
+    </div>
+    <p class="tenant-count" id="tenant-count">12 tenants</p>
+
+    <!-- Rendered from the JSON at the foot of this page. In Astro these
+         tiles are generated at build time and the markup is identical. -->
+    <div class="tenant-grid" id="tenant-grid"></div>
+
+  </div>
+
+  <!-- FOOTER — plain text, no artwork and no animation. One column at the
+       left on desktop, centred on a phone, with deliberate empty space
+       around it. Room here for more content later. -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+
+      <div class="footer-col">
+        <p>
+          The Foundation<br>
+          21 Main Road<br>
+          Knysna, 6540
+        </p>
+        <p><a href="tel:+27123456721">+27 123 4567 21</a></p>
+      </div>
+
+      <div class="footer-col">
+        <p>
+          Mon &ndash; Fri: 9am &ndash; 5pm<br>
+          Sat: 10am &ndash; 3pm<br>
+          Sun: closed
+        </p>
+        <p><a href="https://www.instagram.com/thefoundationknysna/"
+              target="_blank" rel="noopener">Instagram</a></p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ── TENANT DETAIL PANEL ────────────────────────────────────────────
+       One panel, filled from the data on click. Slides in from the right so
+       the photographs can run edge to edge. -->
+  <div class="panel-scrim" id="tenant-scrim" hidden></div>
+
+  <aside class="tenant-panel" id="tenant-panel" role="dialog" aria-modal="true"
+         aria-labelledby="panel-name" hidden>
+    <button class="panel__close" type="button" aria-label="Close">&#10005;</button>
+    <div class="panel__inner">
+      <span class="panel__cat"></span>
+      <h2 class="panel__name" id="panel-name"></h2>
+      <span class="panel__unit"></span>
+      <p class="panel__blurb"></p>
+      <!-- Links above the photographs: the address and the socials are the
+           thing a visitor came for, and the gallery can run on below them
+           to the bottom edge of the panel. -->
+      <div class="panel__links">
+        <a class="panel__site" href="#" rel="noopener">Visit the website &rarr;</a>
+        <span class="panel__socials"></span>
+      </div>
+      <div class="panel__shots"></div>
+
+      <!-- WHERE TO FIND THEM. Last in the panel, below the gallery.
+           Hidden outright for a tenant with no map data, so an unplaced
+           trader shows no empty frame. The plan is one shared image per
+           floor; the cross is drawn in CSS and positioned by percentage,
+           which is why a stall moving is two numbers in the JSON rather
+           than a redrawn graphic. -->
+      <figure class="panel__map" hidden>
+        <div class="panel__map-frame">
+          <img class="panel__map-plan" src="" alt="" />
+          <span class="map-cross" aria-hidden="true"></span>
+        </div>
+        <figcaption class="panel__map-cap"></figcaption>
+      </figure>
+    </div>
+  </aside>
+
+  <!-- ── THE DATA ────────────────────────────────────────────────────────
+       This block is deliberately the exact shape of the future
+       src/data/tenants.json. At port time it moves out of the page as-is and
+       Astro renders from it; nothing about the fields changes.
+
+       Placeholder artwork and copy throughout.                            -->
+  <script type="application/json" id="tenant-data">
+[
+  {
+    "id": "juni-the-label",
+    "name": "Juni The Label",
+    "category": "fashion",
+    "unit": "Unit 23, upstairs",
+    "art": "images/tenants/juni.png",
+    "blurb": "We exist to offer a fun, thoughtful & affordable slow-fashion alternative to today's fast-fashion world.",
+    "photos": [
+      "images/tenants/juni-1.jpg",
+      "images/tenants/juni-2.jpg",
+      "images/tenants/juni-3.jpg"
+    ],
+    "link": "https://www.junithelabel.co.za/",
+    "socials": {
+      "Instagram": "https://www.instagram.com/juni_the_label",
+      "Facebook": "https://facebook.com/"
+    },
+    "map": {
+      "floor": "upper",
+      "x": 62,
+      "y": 30
+    }
+  },
+  {
+    "id": "bluebird",
+    "name": "Bluebird Thrift Boutique",
+    "category": "fashion",
+    "unit": "Unit 26, downstairs in the eastern corner",
+    "art": "images/tenants/bluebird.png",
+    "blurb": "Some copy for Bluebird here, keep it short and simple, one or two sentances are good.",
+    "photos": [
+      "images/tenants/bluebird-1.jpg"
+    ],
+    "link": "https://www.facebook.com/people/bluebirdboutique__/",
+    "socials": {
+      "Facebook": "https://www.facebook.com/people/bluebirdboutique__/"
+    },
+    "map": {
+      "floor": "ground",
+      "x": 86,
+      "y": 22
+    }
+  },
+  {
+    "id": "loaf",
+    "name": "Loaf",
+    "category": "eat",
+    "unit": "Unit 1, ground floor",
+    "art": "images/tenants/loaf.png",
+    "blurb": "Sourdough, pastries, and a queue out the door by nine. The rye is worth the wait and the cardamom buns sell out first.",
+    "photos": [
+      "images/gallery/the-foundation-knysna-pancakes.jpg",
+      "images/gallery/the-foundation-knysna-coffee.jpg"
+    ],
+    "link": "https://example.com/loaf",
+    "socials": {
+      "Instagram": "https://instagram.com/"
+    },
+    "map": {
+      "floor": "ground",
+      "x": 14,
+      "y": 20
+    }
+  },
+  {
+    "id": "the-long-table",
+    "name": "The Long Table",
+    "category": "eat",
+    "unit": "Unit 2",
+    "art": "images/tenants/the-long-table.png",
+    "blurb": "Shared plates from whatever the Knysna boats landed that morning. One sitting, one table, book ahead.",
+    "photos": [
+      "images/gallery/the-foundation-knysna-pancakes.jpg"
+    ],
+    "link": "https://example.com/long-table",
+    "socials": {
+      "Instagram": "https://instagram.com/",
+      "Facebook": "https://facebook.com/"
+    },
+    "map": {
+      "floor": "ground",
+      "x": 34,
+      "y": 20
+    }
+  },
+  {
+    "id": "knysna-coffee-works",
+    "name": "Knysna Coffee Works",
+    "category": "drink",
+    "unit": "Unit 7",
+    "art": "images/tenants/knysna-coffee-works.png",
+    "blurb": "Roasted downstairs on Tuesdays. You can smell it from the upstairs landing, which nobody has ever complained about.",
+    "photos": [
+      "images/gallery/the-foundation-knysna-coffee.jpg"
+    ],
+    "link": "https://example.com/coffee-works",
+    "socials": {
+      "Instagram": "https://instagram.com/"
+    },
+    "map": {
+      "floor": "ground",
+      "x": 55,
+      "y": 20
+    }
+  },
+  {
+    "id": "tidewater-brewing",
+    "name": "Tidewater Brewing",
+    "category": "drink",
+    "unit": "Unit 9",
+    "art": "images/tenants/tidewater-brewing.png",
+    "blurb": "Six taps, rotating. The stout is the one, and the brewer will tell you so himself if you give him an opening.",
+    "photos": [
+      "images/gallery/the-foundation-knysna-shop.jpg"
+    ],
+    "link": "https://example.com/tidewater",
+    "socials": {
+      "Instagram": "https://instagram.com/",
+      "Facebook": "https://facebook.com/"
+    },
+    "map": {
+      "floor": "ground",
+      "x": 79,
+      "y": 20
+    }
+  },
+  {
+    "id": "sea-glass-studio",
+    "name": "Sea Glass Studio",
+    "category": "craft",
+    "unit": "Unit 11, upstairs",
+    "art": "images/tenants/sea-glass-studio.png",
+    "blurb": "Hand-blown glass, made on site. Watch through the window \u2014 the furnace runs Wednesday to Saturday.",
+    "photos": [
+      "images/gallery/the-foundation-knysna-shop.jpg",
+      "images/gallery/the-foundation-knysna-coffee.jpg"
+    ],
+    "link": "https://example.com/sea-glass",
+    "socials": {
+      "Instagram": "https://instagram.com/"
+    },
+    "map": {
+      "floor": "upper",
+      "x": 20,
+      "y": 24
+    }
+  },
+  {
+    "id": "the-bindery",
+    "name": "The Bindery",
+    "category": "craft",
+    "unit": "Unit 13",
+    "art": "images/tenants/the-bindery.png",
+    "blurb": "Hand-bound notebooks, and repairs to books you thought were finished. Bring the pieces in a bag; it is rarely hopeless.",
+    "photos": [
+      "images/gallery/the-foundation-knysna-shop.jpg"
+    ],
+    "link": "https://example.com/bindery",
+    "socials": {
+      "Instagram": "https://instagram.com/"
+    },
+    "map": {
+      "floor": "ground",
+      "x": 20,
+      "y": 52
+    }
+  },
+  {
+    "id": "unwind",
+    "name": "Unwind",
+    "category": "fashion",
+    "unit": "Unit 17, Downstairs in the east wing",
+    "art": "images/tenants/unwind.png",
+    "blurb": "All of our garments are made with only the best natural fibres and our designs are internationally inspired. We are very passionate about natural fibres and its qualities and that is why we use pure linen and cotton as far as we can.",
+    "photos": [
+      "images/tenants/unwind-1.jpg",
+      "images/tenants/unwind-2.jpg"
+    ],
+    "link": "https://unwindlinen.co.za/",
+    "socials": {
+      "Instagram": "https://www.instagram.com/unwind_linen/",
+      "Facebook": "https://www.facebook.com/unwindlinen"
+    },
+    "map": {
+      "floor": "ground",
+      "x": 79,
+      "y": 52
+    }
+  },
+  {
+    "id": "ochre",
+    "name": "Ochre",
+    "category": "art",
+    "unit": "Unit 18",
+    "art": "images/tenants/ochre.png",
+    "blurb": "A jeweller working in silver and found stone. Commissions take about a month and are worth every day of it.",
+    "photos": [
+      "images/gallery/the-foundation-knysna-coffee.jpg"
+    ],
+    "link": "https://example.com/ochre",
+    "socials": {
+      "Instagram": "https://instagram.com/"
+    },
+    "map": {
+      "floor": "ground",
+      "x": 50,
+      "y": 52
+    }
+  },
+  {
+    "id": "hemp-and-herringbone",
+    "name": "Hemp and Herringbone",
+    "category": "fashion",
+    "unit": "Unit 29",
+    "art": "images/tenants/hemp-and-herringbone.png",
+    "blurb": "Slow-made clothing in natural fibre. Everything is cut here and most of it is sewn here too.",
+    "photos": [
+      "images/gallery/the-foundation-knysna-shop.jpg"
+    ],
+    "link": "https://example.com/hemp",
+    "socials": {
+      "Instagram": "https://instagram.com/"
+    },
+    "map": {
+      "floor": "ground",
+      "x": 22,
+      "y": 80
+    }
+  },
+  {
+    "id": "second-skin",
+    "name": "Second Skin",
+    "category": "fashion",
+    "unit": "Unit 30",
+    "art": "images/tenants/second-skin.png",
+    "blurb": "Vintage and reworked pieces, tightly edited. New rail every Thursday and it does not last the weekend.",
+    "photos": [
+      "images/gallery/the-foundation-knysna-shop.jpg"
+    ],
+    "link": "https://example.com/second-skin",
+    "socials": {
+      "Instagram": "https://instagram.com/"
+    }
+  }
+]
+  </script>
+
+  <script src="js/site.js"></script>
+  <script src="js/tenants.js"></script>
+</body>
+</html>
